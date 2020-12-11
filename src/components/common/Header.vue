@@ -51,28 +51,28 @@
 </template>
 
 <script>
-  export default {
-    name: "Header",
-    data() {
-      return {
-        path: '',
-        input: '',
-        isAuthActive: false,
-        menu: {},
-        normalLinkClass: 'login user-link',
-        activeLinkClass: 'user-link_active',
-        canLinkActive: false
-      }
-    },
-    props: {
-      user: {
-        type: Object
-      }
-    },
-    mounted() {
-      this.path = '/';
-    },
-  }
+export default {
+  name: "Header",
+  data() {
+    return {
+      path: '',
+      input: '',
+      isAuthActive: false,
+      menu: {},
+      normalLinkClass: 'login user-link',
+      activeLinkClass: 'user-link_active',
+      canLinkActive: false
+    }
+  },
+  props: {
+    user: {
+      type: Object
+    }
+  },
+  mounted() {
+    this.path = '/';
+  },
+}
 </script>
 
 <style lang="scss" scoped>
