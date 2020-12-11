@@ -1,28 +1,56 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Header :user.sync="user"></Header>
+
+    <el-main @login="updateLoginState">
+      <transition name="slide-fade" mode="out-in">
+        <router-view :user.sync="user"></router-view>
+      </transition>
+    </el-main>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Header from '@/components/common/Header'
 
 export default {
   name: 'App',
+  data() {
+    return {
+      user: {}
+    }
+  },
   components: {
-    HelloWorld
+    Header
+  },
+  methods: {
+    updateLoginState(user) {
+      this.user = user
+    }
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+body {
+  margin: 0;
 }
+
+.slide-fade-enter-active {
+  transition: all 0.2s ease;
+}
+.slide-fade-leave-active {
+  transition: all 0.2s ease;
+}
+.slide-fade-enter,
+.slide-fade-leave-to {
+  opacity: 0;
+}
+.slide-fade-enter {
+  transform: translateX(-50px);
+}
+.slide-fade-leave-to {
+  transform: translateX(50px);
+}
+
 </style>
