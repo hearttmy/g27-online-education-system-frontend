@@ -1,5 +1,5 @@
 import axios from 'axios';
-import router from './router';
+import router from '@/router/router';
 import getLoginState from './getLoginState';
 import config from './config/index';
 

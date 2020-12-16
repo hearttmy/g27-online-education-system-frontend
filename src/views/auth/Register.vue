@@ -79,7 +79,7 @@
 </template>
 
 <script>
-import { UserProvider } from '../../provider'
+import { UserProvider } from '@/provider/index'
 
 export default {
   name: 'register',
@@ -178,7 +178,7 @@ export default {
       gradeOptions: [],
       faculty: {
         ['计算机工程学院']: {
-          ['网络工程']: [1, 2]
+          ['软件工程']: [1, 2]
         }
       },
 

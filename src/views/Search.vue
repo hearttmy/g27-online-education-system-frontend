@@ -4,7 +4,7 @@
     <el-tabs v-model="activeName">
       <el-tab-pane v-for="(item, key) in result"
                   :key="key"
-                  :label="nameMap[key]" 
+                  :label="nameMap[key]"
                   :name="key">
         <component :is="key + 'List'" :data="item"></component>
       </el-tab-pane>
@@ -13,11 +13,11 @@
 </template>
 
 <script>
-import MainLayout from '../../components/MainLayout';
-import { OthersProvider } from '../../provider'
-import ArticleList from './components/articleList'
-import CoursesList from './components/coursesList'
-import QaList from './components/qaList'
+import MainLayout from '@/components/common/MainLayout';
+import { OthersProvider } from '@/provider'
+import ArticleList from './search/articleList'
+import CoursesList from './search/coursesList'
+import QaList from './search/qaList'
 
 export default {
   components: {

@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import MainLayout from '../components/MainLayout';
+import MainLayout from '@/components/common/MainLayout';
 
 export default {
   props: {

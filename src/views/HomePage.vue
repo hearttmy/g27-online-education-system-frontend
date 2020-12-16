@@ -52,6 +52,8 @@
 
 <script>
 import MainLayout from '@/components/common/MainLayout';
+import { CoursesProvider } from '@/provider/index';
+
 
 export default {
   props: {

@@ -19,6 +19,9 @@
       </el-menu>
     </div>
 
+    <!-- <el-menu-item index="/library">教学资源</el-menu-item>
+      <el index="/exercise">作业练习</el -menu-item>
+      <el-menu-item index="/exam">考试</el-menu-item>-->
     <div class="search-user__wrapper">
       <el-input
           class="global-search"
@@ -51,8 +54,10 @@
 </template>
 
 <script>
+import { UserProvider } from '@/provider/index'
+
 export default {
-  name: "Header",
+  name: 'baseHeader',
   data() {
     return {
       path: '',
@@ -62,17 +67,68 @@ export default {
       normalLinkClass: 'login user-link',
       activeLinkClass: 'user-link_active',
       canLinkActive: false
-    }
+    };
   },
   props: {
     user: {
       type: Object
     }
   },
+  created() {},
   mounted() {
     this.path = '/';
   },
-}
+  watch: {
+    '$route.path': function() {
+      let path = this.$route.path.replace(/(\/[^\/]+)(\/.+$)/, '$1');
+      this.path = path;
+      this.$refs.menu.activeIndex = path;
+      this.canLinkActive = path == '/auth' ? true : false;
+      // 检测到跳转到了auth并且cookie已过期，更新user数据
+      if (path === '/auth' && !this.$getLoginState()) {
+        this.$emit('update:user', {});
+      }
+    }
+  },
+  methods: {
+    searchGlobal () {
+      if (!this.input) {
+        return
+      }
+      this.$router.push({
+        name: 'search',
+        query: { key: this.input }
+      })
+    },
+    logout() {
+      let userType = '';
+      if (this.user.userType === 0) {
+        userType = 'STU';
+      } else {
+        userType = 'TCH';
+      }
+
+      UserProvider.user.logout(userType)
+          .then(res => {
+            if (res.code === 1) {
+              this.$emit('update:user', {});
+              this.$router.push({ path: '/' });
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+    },
+    userCommand(command) {
+      if (command === 'logout') {
+        this.logout();
+      }
+      if (command === 'getOwnInfo') {
+        this.$router.push({ path: '/myInfo' });
+      }
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>

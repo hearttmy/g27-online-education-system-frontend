@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { UserProvider } from '../../provider'
+import { UserProvider } from '@/provider/index'
 
 export default {
   name: 'login',
