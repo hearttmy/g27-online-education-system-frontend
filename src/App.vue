@@ -34,6 +34,7 @@ export default {
 <style>
 body {
   margin: 0;
+  background-color: rgb(247, 247, 247);
 }
 
 .slide-fade-enter-active {

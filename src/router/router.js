@@ -31,6 +31,16 @@ let router = new Router({
       }
     },
     {
+      path: '/user',
+      name: 'user',
+      component: () => import('@/views/User'),
+      meta: {
+        auth: 'all'
+      },
+      children: [
+      ],
+    },
+    {
       path: "/course",
       component: () => import("@/views/Course.vue"),
       children: [
@@ -44,6 +54,7 @@ let router = new Router({
 // 路由鉴权
 router.beforeEach((to, from, next) => {
   if (to.meta.auth) {
+    console.log("123")
     const loginState = getLoginState() || {};
     const userType = loginState.userType;
     if (to.meta.auth === "all") {

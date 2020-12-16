@@ -1,9 +1,12 @@
 <template>
   <el-header>
-    <div class="ul-menu__wrapper">
-      <router-link to="/">
-        <img class="logo" src="@/assets/img/logo2.png" alt="logo" />
-      </router-link>
+    <div>
+      <div class="logo-wrapper">
+        <router-link to="/">
+          <img src="@/assets/img/logo.png" alt="logo" />
+        </router-link>
+      </div>
+
       <el-menu
           :default-active="path"
           class="nav-menu"
@@ -45,7 +48,7 @@
           <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item command="getOwnInfo">我的信息</el-dropdown-item>
+          <el-dropdown-item command="getOwnInfo">个人中心</el-dropdown-item>
           <el-dropdown-item command="logout">退出登录</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -133,16 +136,22 @@ export default {
 
 <style lang="scss" scoped>
 header {
+  background-color: white;
   min-width: 970px;
   border-bottom: 1px solid #ddd;
   height: 61px !important;
   overflow: hidden;
   display: flex;
   justify-content: space-between;
-  .logo {
+  font-weight: bold;
+  .logo-wrapper {
+    margin-left: 100px;
+    margin-right: 25px;
+    width: 200px;
     height: 100%;
-    width: 70%;
+    display: inline-block;
   }
+
   .el-dropdown {
     padding-left: 20px;
     line-height: 60px;
@@ -150,19 +159,6 @@ header {
 
     .el-dropdown-link {
       cursor: pointer;
-    }
-  }
-  > .ul-menu__wrapper {
-    height: 100%;
-
-    .logo {
-      width: 120px;
-    }
-
-    > a {
-      display: inline-block;
-      height: 100%;
-      margin-right: 25px;
     }
   }
 
@@ -178,13 +174,13 @@ header {
     display: inline-block;
   }
   .search-user__wrapper {
+    margin-right: 100px;
     .global-search,
     .login,
     .el-dropdown {
       display: inline-block;
     }
     .user-link {
-      height: 60px;
       line-height: 60px;
       margin: 0;
       border-bottom: 2px solid transparent;

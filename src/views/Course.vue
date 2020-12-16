@@ -1,5 +1,5 @@
 <template>
-  <MainLayout :xs="24" :sm="22" :md="20" :lg="20" :xl="20">
+  <MainLayout>
     <transition name="course-slide-fade" mode="out-in">
       <router-view :user="user"></router-view>
     </transition>
