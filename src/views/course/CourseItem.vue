@@ -15,7 +15,8 @@
 </template>
 
 <script>
-import TheBaseNavSideBar from '@/components/TheBaseNavSideBar';
+import TheBaseNavSideBar from '@/components/course/BaseNavSideBar';
+
 export default {
   data() {
     return {};

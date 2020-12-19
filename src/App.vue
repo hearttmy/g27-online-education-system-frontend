@@ -2,7 +2,8 @@
   <div id="app">
     <Header :user.sync="user"></Header>
 
-    <div @login="updateLoginState" :class="{'home-style': isHomePage, 'main-style': true}">
+    <div @login="updateLoginState"
+         :class="{'main-style': true, 'user-style': isUserPage}">
       <transition name="slide-fade" mode="out-in">
         <router-view :user.sync="user"></router-view>
       </transition>
@@ -24,8 +25,8 @@ export default {
     Header
   },
   computed: {
-    isHomePage() {
-      if (this.$route.path === '/') {
+    isUserPage() {
+      if (this.$route.path === '/user') {
         return true;
       }
       return false;
@@ -45,9 +46,8 @@ body {
   padding: 0;
 }
 
-.home-style {
-  background-color: rgba(247, 247, 247, 1);
-  padding: 20px;
+.user-style {
+  padding: 0px !important;
 }
 
 .main-style {
@@ -56,6 +56,8 @@ body {
   flex-basis: auto;
   overflow: auto;
   box-sizing: border-box;
+  padding: 20px;
+  background-color: rgba(247, 247, 247, 1);
 }
 
 .slide-fade-enter-active {

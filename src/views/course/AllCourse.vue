@@ -92,7 +92,7 @@
       <span class="no-course">暂无课程</span>
     </el-row>
     <el-row :gutter="20">
-      <el-col class="course-bar" 
+      <el-col class="course-bar"
               style="width: 260px;"
               v-for="(course, index) in courses"
               :key="index">
@@ -103,8 +103,8 @@
 </template>
 
 <script>
-import { CoursesProvider } from '../../provider/index'
-import CourseCard from '../../components/CourseCard';
+import { CoursesProvider } from '@/provider/index'
+import CourseCard from '@/components/course/CourseCard';
 
 export default {
   components: {
@@ -221,7 +221,7 @@ export default {
       if (!this.newCourse.newCourseName) {
         this.$message.error({
           message:'请填写课程名称！'
-        })      
+        })
       }else {
         this.addingNewCourse = true;
         this.$refs.upload.submit();

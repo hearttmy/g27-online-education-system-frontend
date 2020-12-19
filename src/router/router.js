@@ -35,6 +35,7 @@ let router = new Router({
       name: 'user',
       component: () => import('@/views/User'),
       meta: {
+        title: '个人中心',
         //auth: 'all'
       },
       children: [
@@ -42,8 +43,39 @@ let router = new Router({
     },
     {
       path: "/course",
-      component: () => import("@/views/Course.vue"),
+      component: () => import("@/views/Course"),
+      meta: {
+        title: '课程',
+      },
       children: [
+        {
+          path: '',
+          name: 'all_course',
+          component: () => import("@/views/course/AllCourse"),
+          meta: {
+            title: "全部课程"
+          }
+        },
+        {
+          path: ":course_id",
+          name: "course_item",
+          component: () => import("@/views/course/CourseItem"),
+          meta: {
+            //auth: "all",
+            title: "课程"
+          },
+          children: [
+            {
+              path: "index",
+              name: "course_detail",
+              component: () => import("@/views/course/CourseDetail"),
+              meta: {
+                //auth: "all",
+                title: "课程内容"
+              }
+            },
+          ]
+        },
 
       ]
 
