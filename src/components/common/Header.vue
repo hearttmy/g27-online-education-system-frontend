@@ -3,7 +3,7 @@
     <div>
       <div class="logo-wrapper">
         <router-link to="/">
-          <img src="@/assets/img/logo.png" alt="logo" />
+          <img src="~@/assets/img/logo.png" alt="logo" />
         </router-link>
       </div>
 
@@ -32,6 +32,7 @@
           placeholder="搜索..."
           @keyup.enter.native="searchGlobal"
       ></el-input>
+      <el-button type="primary" icon="el-icon-search" @click="searchGlobal">搜索</el-button>
 
       <el-link
           :class="[normalLinkClass, canLinkActive ? activeLinkClass : '']"
@@ -191,7 +192,7 @@ header {
     }
     .user-link {
       line-height: 60px;
-      margin: 0;
+      margin-left: 25px;
       border-bottom: 2px solid transparent;
       color: #909399;
       height: 100%;
@@ -203,7 +204,7 @@ header {
     }
     .global-search {
       width: 240px;
-      margin-right: 25px;
+      margin-right: 5px;
     }
   }
 }
