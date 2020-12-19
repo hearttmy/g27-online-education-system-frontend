@@ -72,9 +72,4 @@ export const ExamsProvider = {
       .then(res => res)
       .catch(err => err)
   },
-  updateExamPaper: (payload) => {
-    return http.post('updateExamPaper', payload)
-      .then(res => res)
-      .catch(err => err)
-  },
 }

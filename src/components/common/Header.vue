@@ -35,7 +35,7 @@
 
       <el-link
           :class="[normalLinkClass, canLinkActive ? activeLinkClass : '']"
-          @click="$router.push({ path: '/auth' })"
+          @click="toAuth"
           :underline="false"
           v-if="!user.id"
       >登录/注册</el-link
@@ -49,6 +49,7 @@
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="getOwnInfo">个人中心</el-dropdown-item>
+          <el-dropdown-item command="settings">设置</el-dropdown-item>
           <el-dropdown-item command="logout">退出登录</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -94,6 +95,11 @@ export default {
     }
   },
   methods: {
+    toAuth() {
+      if (this.$route.path != '/auth') {
+        this.$router.push({ path: '/auth' })
+      }
+    },
     searchGlobal () {
       if (!this.input) {
         return
@@ -128,6 +134,9 @@ export default {
       }
       if (command === 'getOwnInfo') {
         this.$router.push({ path: '/myInfo' });
+      }
+      if (command === 'settings') {
+        this.$router.push({path: '/settings'});
       }
     }
   }

@@ -35,7 +35,7 @@ let router = new Router({
       name: 'user',
       component: () => import('@/views/User'),
       meta: {
-        auth: 'all'
+        //auth: 'all'
       },
       children: [
       ],

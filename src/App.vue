@@ -2,11 +2,11 @@
   <div id="app">
     <Header :user.sync="user"></Header>
 
-    <el-main @login="updateLoginState">
+    <div @login="updateLoginState" :class="{'home-style': isHomePage, 'main-style': true}">
       <transition name="slide-fade" mode="out-in">
         <router-view :user.sync="user"></router-view>
       </transition>
-    </el-main>
+    </div>
   </div>
 </template>
 
@@ -17,11 +17,19 @@ export default {
   name: 'App',
   data() {
     return {
-      user: {}
+      user: {},
     }
   },
   components: {
     Header
+  },
+  computed: {
+    isHomePage() {
+      if (this.$route.path === '/') {
+        return true;
+      }
+      return false;
+    },
   },
   methods: {
     updateLoginState(user) {
@@ -34,7 +42,20 @@ export default {
 <style>
 body {
   margin: 0;
-  background-color: rgb(247, 247, 247);
+  padding: 0;
+}
+
+.home-style {
+  background-color: rgba(247, 247, 247, 1);
+  padding: 20px;
+}
+
+.main-style {
+  display: block;
+  flex: 1;
+  flex-basis: auto;
+  overflow: auto;
+  box-sizing: border-box;
 }
 
 .slide-fade-enter-active {
