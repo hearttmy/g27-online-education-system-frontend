@@ -56,6 +56,7 @@
 
 <script>
 import MainLayout from "@/components/common/MainLayout";
+import {HomeProvider} from "@/network";
 
 export default {
   name: "Home",
@@ -63,10 +64,17 @@ export default {
   data() {
     return {
       carouselItems: [],
-      courses: [1, 2, 3, 4, 5, 6],
+      courses: [],
       courseIndex: ['全部课程', '理学', '工学', '哲学', '美术'],
       tmpUrl: '~@/assets/img/logo.png',
     };
+  },
+  created() {
+    HomeProvider.getCourse()
+    .then(res => {
+      console.log(res)
+      this.courses = res
+    })
   },
   methods: {
 
