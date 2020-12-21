@@ -11,6 +11,14 @@ const routes = [
       title: '首页'
     }
   },
+  {
+    path: '/auth',
+    name: 'auth',
+    component: () => import('@/views/Auth'),
+    meta: {
+      title: '登录'
+    }
+  }
 ]
 
 const router = new VueRouter({

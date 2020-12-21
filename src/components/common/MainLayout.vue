@@ -19,11 +19,11 @@ export default {
     },
     md: {
       type: Number,
-      default: 20
+      default: 18
     },
     lg: {
       type: Number,
-      default: 19
+      default: 18
     },
     xl: {
       type: Number,
