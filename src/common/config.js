@@ -1,3 +1,3 @@
 export default {
-  serverBaseUrl: 'http://39.108.52.7:9000',
+  serverBaseUrl: 'http://10.181.182.128:2088/api',
 }

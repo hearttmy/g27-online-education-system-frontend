@@ -14,14 +14,14 @@
   </div>
 
   <div class="login-wrapper">
-    <el-link class="login-link" @click="$router.push({ path: '/auth' })"
+    <el-link class="login-link" @click="toAuth"
              :underline="false" v-if="!user.id">
       登录/注册
     </el-link>
 
     <el-dropdown v-else trigger="click" @command="userCommand">
         <span class="el-dropdown-link">
-          <img class="avatar" :src="$serverBaseUrl + user.avatar" />
+          <img class="avatar" :src="$serverBaseUrl" />
           {{ user.username }}
           <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
@@ -42,15 +42,29 @@ export default {
   data() {
     return {
       input: '',
-      user: this.$store.state.user,
+    }
+  },
+  computed: {
+    user() {
+      return this.$store.state.user
     }
   },
   methods: {
     search() {
-
+      if (!this.input) {
+        return
+      }
+      this.$router.push({
+        name: 'search',
+        query: { key: this.input }
+      })
     },
     logout() {
-
+      this.$store.commit('logout')
+    },
+    toAuth() {
+      if (this.$route.path !== '/auth/login')
+        this.$router.push('/auth/login')
     },
     userCommand(command) {
       if (command === 'logout') {
@@ -64,7 +78,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .header-wrapper {
   overflow: hidden;
   display: flex;
@@ -91,5 +105,23 @@ export default {
 
 .login-link {
   font-size: 16px;
+}
+
+.avatar {
+  margin-right: 10px;
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  vertical-align: middle;
+  border-radius: 50%;
+}
+
+.el-dropdown {
+  padding-left: 20px;
+  line-height: 60px;
+  border-left: 1px solid #ddd;
+  .el-dropdown-link {
+    cursor: pointer;
+  }
 }
 </style>

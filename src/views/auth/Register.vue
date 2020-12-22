@@ -1,11 +1,12 @@
 <template>
+  <div>
+    <span class="current-tab-title">注册</span>
   <el-form
     :model="registerData"
     label-position="top"
     status-icon
     :rules="registerDataRules"
-    ref="registerData"
-  >
+    ref="registerData">
     <el-form-item label="学号/工号：" prop="id">
       <el-input v-model="registerData.id" placeholder="请输入学号/工号" autocomplete="off"></el-input>
     </el-form-item>
@@ -70,17 +71,18 @@
       </el-form-item>
     </div>
 
-    <span class="change-tab" @click="$emit('changeTab', 'Login')">已有账号？马上登录</span>
+    <span class="change-tab" @click="$router.push('/auth/login')">已有账号？马上登录</span>
 
     <el-form-item>
       <el-button type="primary" @click="submitForm('registerData')"
                  :loading="submitting">注册并登录</el-button>
     </el-form-item>
   </el-form>
+  </div>
 </template>
 
 <script>
-
+import AuthProvider from "@/network/request/auth";
 
 export default {
   name: 'register',
@@ -160,7 +162,7 @@ export default {
         faculty: '',
         major: '',
         grade: '',
-        sclass: ''
+        sclass: '',
       },
       registerDataRules: {
         id: [{ validator: validateId, trigger: 'change' }],
@@ -187,28 +189,54 @@ export default {
     };
   },
   created() {
-    // 初始化年级选择器中的选项
     for (let i = 1; i <= 5; i++) {
-      const date = new Date();
+      const date = new Date()
       if (date.getMonth() > 8 && i === 1) {
-        // 8、9月入学，已入学的学生才可以选今年
-        this.gradeOptions.push(date.getFullYear());
+        this.gradeOptions.push(date.getFullYear())
         continue;
       }
-      this.gradeOptions.push(date.getFullYear() - i);
+      this.gradeOptions.push(date.getFullYear() - i)
     }
   },
   methods: {
     login() {
     },
     submitForm(formName) {
-
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          this.submitting = true;
+          AuthProvider.register(this.registerData)
+            .then(res => {
+              console.log(res)
+            })
+            .catch(err => {
+              console.log(err)
+            })
+            .finally(() => {
+              this.submitting = false
+            });
+        } else {
+          return false
+        }
+      });
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
+
+.current-tab-title {
+  display: block;
+  margin-bottom: 30px;
+  text-align: center;
+  letter-spacing: 1ch;
+  text-indent: 1ch;
+  font-size: 1.8em;
+  font-weight: bold;
+  color: #888;
+}
+
 .el-select {
   width: 100%;
 }

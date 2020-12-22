@@ -16,7 +16,48 @@ const routes = [
     name: 'auth',
     component: () => import('@/views/Auth'),
     meta: {
-      title: '登录'
+    },
+    children: [
+      {
+        path: 'login',
+        name: 'login',
+        component: () => import('@/views/auth/Login'),
+        meta: {
+          title: '登录',
+        }
+      },
+      {
+        path: 'register',
+        name: 'register',
+        component: () => import('@/views/auth/Register'),
+        meta: {
+          title: '注册',
+        }
+      },
+      {
+        path: 'reset',
+        name: 'reset',
+        component: () => import('@/views/auth/Reset'),
+        meta: {
+          title: '重置密码',
+        }
+      },
+    ],
+  },
+  {
+    path: '/search',
+    name: 'search',
+    component: () => import('@/views/Search'),
+    meta: {
+      title: '搜索',
+    }
+  },
+  {
+    path: '/courseList',
+    name: 'courseList',
+    component: () => import('@/views/CourseList'),
+    meta: {
+      title: '课程列表',
     }
   }
 ]

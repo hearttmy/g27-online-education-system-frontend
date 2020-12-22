@@ -2,27 +2,29 @@
 <MainLayout>
   <el-row type="flex" class="carousel-wrapper" justify="space-between">
     <el-card class="index-box" shadow="never">
-      <el-menu>
-        <el-menu-item v-for="item in courseIndex" :key="item">{{item}}</el-menu-item>
+      <el-menu @select="selectIndex">
+        <el-menu-item v-for="(item, i) in courseIndex" :index="i.toString()">
+          {{item}}
+        </el-menu-item>
       </el-menu>
     </el-card>
 
-<!--    <el-carousel class="my-carousel" v-if="courses.length">-->
-<!--      <el-carousel-item v-for="(course, index) in courses"-->
-<!--                        :key="index"-->
-<!--                        style="cursor:pointer;"-->
-<!--                        @click="$router.push({path: `/course/${course.courseID}/index`})">-->
-<!--        <img-->
-<!--          :src="$serverBaseUrl + course.cover"-->
-<!--          :alt="course.coursename"-->
-<!--          :title="course.coursename"-->
-<!--          @click.prevent=""/>-->
-<!--      </el-carousel-item>-->
-<!--    </el-carousel>-->
+    <el-carousel class="my-carousel" v-if="courses.length">
+      <el-carousel-item v-for="(course, index) in courses"
+                        :key="index"
+                        style="cursor:pointer;"
+                        @click="$router.push({path: `/course/${course.courseID}/index`})">
+        <img
+          src="~@/assets/img/logo.png"
+          :alt="course.coursename"
+          :title="course.coursename"
+          @click.prevent=""/>
+      </el-carousel-item>
+    </el-carousel>
 
     <el-card class="login-box" shadow="never">
       <div class="avatar-box">
-        <el-avatar :src="require('@/assets/img/logo.png')" :size="100"></el-avatar>
+        <el-avatar :src="avatarUrl" :size="100"></el-avatar>
       </div>
       <div class="login-btn-box">
         <el-button type="success" round>登录/注册</el-button>
@@ -35,67 +37,61 @@
   </el-row>
 
 
-  <el-row class="course-wrapper">
-      <el-col :span="6" v-for="(item, index) in courses" :key="item"
-              style="padding: 10px 10px 0px 5px">
-        <el-card :body-style="{ padding: '0px' }" shadow="hover">
-          <img class="course-cover" src="~@/assets/img/logo.png">
-
-          <div style="padding: 14px;">
-            <span>好吃的汉堡</span>
-            <div class="bottom">
-              <el-button type="text" class="button">操作按钮</el-button>
-            </div>
-          </div>
-        </el-card>
-      </el-col>
-  </el-row>
+  <CourseCards :courses="courses"></CourseCards>
 
 </MainLayout>
 </template>
 
 <script>
 import MainLayout from "@/components/common/MainLayout";
-import {HomeProvider} from "@/network";
+import HomeProvider from "@/network/request/home";
+import CourseCards from "@/components/courseList/CourseCards";
 
 export default {
   name: "Home",
-  components: {MainLayout},
+  components: {CourseCards, MainLayout},
   data() {
     return {
+      avatarUrl: this.$serverBaseUrl,
       carouselItems: [],
-      courses: [],
-      courseIndex: ['全部课程', '理学', '工学', '哲学', '美术'],
+      courses: [1,2,3,4],
+      courseIndex: ['全部课程', '理学', '工学', '哲学', '经济学'],
       tmpUrl: '~@/assets/img/logo.png',
     };
   },
   created() {
-    HomeProvider.getCourse()
-    .then(res => {
-      console.log(res)
-      this.courses = res
-    })
+
   },
   methods: {
-
+    selectIndex(index) {
+      this.$router.push({
+        name: 'courseList',
+        query: {
+          index,
+        }
+      })
+    },
   },
 }
 </script>
 
 <style lang="scss" scoped>
 .carousel-wrapper {
-  height: 330px;
+  height: 300px;
   .index-box {
-    width: 200px;
-    overflow: auto;
+    width: 150px;
     .el-menu {
       border-right: 0;
+      .el-menu-item:focus{
+        background-color: white;
+      }
     }
   }
   .my-carousel {
     display: inline-block;
-    width: 100%;
+    width: 724px;
   }
+
   .login-box {
     width: 200px;
     .avatar-box {
@@ -120,12 +116,6 @@ export default {
   font-weight: bold;
 }
 
-.course-wrapper {
-  margin-top: 20px;
-  .course-cover {
-    height: 200px;
-    width: 100%;
-  }
-}
+
 
 </style>

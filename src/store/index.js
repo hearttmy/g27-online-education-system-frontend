@@ -6,10 +6,15 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     user: {},
+    token: '',
   },
   mutations: {
-    login(state, userData) {
-      state.user = userData
+    login(state, res) {
+      state.user = res.user
+      state.token = res.token
+    },
+    logout(state) {
+      state.user = {}
     },
   },
   actions: {

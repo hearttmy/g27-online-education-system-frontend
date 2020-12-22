@@ -1,41 +1,15 @@
 <template>
   <div id="auth">
-    <span class="current-tab-title">{{currentTabTitle}}</span>
-    <component :is="currentTab" @login="updateLoginState" @changeTab="changeTab"></component>
+    <transition name="slide-fade" mode="out-in">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
 <script>
-import Login from '@/components/auth/Login';
-import Register from '@/components/auth/Register';
 
 export default {
   name: 'auth',
-  components: {
-    Login,
-    Register
-  },
-  data(){
-    return {
-      currentTab: 'Login'
-    }
-  },
-  computed: {
-    currentTabTitle () {
-      return this.currentTab === 'Login' ? '登录' : '注册';
-    }
-  },
-  created() {
-
-  },
-  methods: {
-    changeTab(tab) {
-      this.currentTab = tab;
-    },
-    updateLoginState (user) {
-      this.$store.commit('login', user);
-    }
-  }
 };
 </script>
 
@@ -44,15 +18,20 @@ export default {
   margin: 10vh auto;
   width: 350px;
 }
-
-.current-tab-title {
-  display: block;
-  margin-bottom: 30px;
-  text-align: center;
-  letter-spacing: 1ch;
-  text-indent: 1ch;
-  font-size: 1.8em;
-  font-weight: bold;
-  color: #888;
+.slide-fade-enter-active {
+  transition: all 0.2s ease;
+}
+.slide-fade-leave-active {
+  transition: all 0.2s ease;
+}
+.slide-fade-enter,
+.slide-fade-leave-to {
+  opacity: 0;
+}
+.slide-fade-enter {
+  transform: translateX(-50px);
+}
+.slide-fade-leave-to {
+  transform: translateX(50px);
 }
 </style>

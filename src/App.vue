@@ -34,6 +34,10 @@ export default {
   background-color: rgba(247, 247, 247, 1);
 }
 
+.el-main {
+  padding: 10px !important;
+}
+
 .slide-fade-enter-active {
   transition: all 0.2s ease;
 }
