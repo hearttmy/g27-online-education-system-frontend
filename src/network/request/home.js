@@ -1,8 +1,8 @@
 import http from "@/network/request";
 
 const HomeProvider  = {
-  getCourse() {
-    return http.post('getCourse', payload)
+  getAllCourse() {
+    return http.get('/course/AllInfo')
       .then(res => res)
       .catch(err => err)
   },

@@ -2,6 +2,12 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 
 Vue.use(VueRouter)
+
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
+
 const routes = [
   {
     path: '/',
@@ -15,8 +21,6 @@ const routes = [
     path: '/auth',
     name: 'auth',
     component: () => import('@/views/Auth'),
-    meta: {
-    },
     children: [
       {
         path: 'login',
@@ -59,6 +63,114 @@ const routes = [
     meta: {
       title: '课程列表',
     }
+  },
+  {
+    path: '/user',
+    component: () => import('@/views/User'),
+    children: [
+      {
+        path: '',
+        name: 'userIndex',
+        component: () => import('@/views/user/UserIndex'),
+        meta: {
+          title: '个人主页'
+        },
+      },
+      {
+        path: 'course',
+        name: 'userCourse',
+        component: () => import('@/views/user/UserCourse'),
+        meta: {
+          title: '我的课程'
+        },
+      },
+      {
+        path: 'score',
+        name: 'userScore',
+        component: () => import('@/views/user/UserScore'),
+        meta: {
+          title: '我的成绩'
+        },
+      },
+      {
+        path: 'setting',
+        name: 'userSetting',
+        component: () => import('@/views/user/UserSetting'),
+        meta: {
+          title: '设置'
+        },
+      },
+    ]
+  },
+  {
+    path: '/course/:course_id',
+    component: () => import('@/views/Course'),
+    children: [
+      {
+        path: 'chapter',
+        name: 'chapter',
+        component: () => import('@/views/course/Chapter'),
+        meta: {
+          title: '课程章节',
+        }
+      },
+      {
+        path: 'bulletin',
+        name: 'bulletin',
+        component: () => import('@/views/course/Bulletin'),
+        meta: {
+          title: '课程公告',
+        }
+      },
+      {
+        path: 'outline',
+        name: 'outline',
+        component: () => import('@/views/course/Outline'),
+        meta: {
+          title: '课程信息',
+        }
+      },
+      {
+        path: 'courseware',
+        name: 'courseware',
+        component: () => import('@/views/course/Chapter'),
+        meta: {
+          title: '课件',
+        }
+      },
+      {
+        path: 'homework',
+        name: 'homework',
+        component: () => import('@/views/course/Chapter'),
+        meta: {
+          title: '课程作业',
+        }
+      },
+      {
+        path: 'group',
+        name: 'group',
+        component: () => import('@/views/course/Chapter'),
+        meta: {
+          title: '课程分组',
+        }
+      },
+      {
+        path: 'exam',
+        name: 'exam',
+        component: () => import('@/views/course/Chapter'),
+        meta: {
+          title: '课程测试',
+        }
+      },
+      {
+        path: 'forum',
+        name: 'forum',
+        component: () => import('@/views/course/Chapter'),
+        meta: {
+          title: '课程讨论',
+        }
+      },
+    ]
   }
 ]
 
@@ -67,5 +179,13 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
 })
+
+// 路由鉴权
+router.beforeEach((to, from, next) => {
+  if (to.meta.title) {
+    document.title = to.meta.title;
+  }
+  next();
+});
 
 export default router

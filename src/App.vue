@@ -23,14 +23,27 @@ export default {
   components: {
     BaseFooter,
     BaseHeader
+  },
+  created() {
+    this.$store.commit('getSessionStorage')
   }
 }
 </script>
 
-<style>
+<style lang="scss">
 @import "~@/assets/css/base.css";
+.el-menu {
+  border-right: 0 !important;
+  .el-menu-item:focus {
+    background-color: white;
+  }
+  .el-menu-item.is-active {
+    background-color: #ecf5ff;
+  }
+}
 
 .my-main {
+  min-height: calc(100vh - 80px);
   background-color: rgba(247, 247, 247, 1);
 }
 

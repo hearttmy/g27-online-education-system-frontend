@@ -9,7 +9,10 @@ import 'element-ui/lib/theme-chalk/index.css'
 Vue.config.productionTip = false
 
 Vue.use(ElementUI)
-Vue.prototype.$serverBaseUrl = config.serverBaseUrl + '/getUrl'
+Vue.prototype.$serverBaseUrl = config.serverBaseUrl
+Vue.prototype.$serverApiUrl = config.serverApiUrl
+Vue.prototype.$serverImgUrl = config.serverImgUrl
+Vue.prototype.$defaultUrl = "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
 
 new Vue({
   router,

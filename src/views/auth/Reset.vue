@@ -4,12 +4,16 @@
     <el-form :model="resetData" label-position="top"
              status-icon :rules="resetDataRules" ref="resetData" label-width="100px">
 
-      <el-form-item label="学号/工号：" prop="id">
-        <el-input v-model="resetData.id" placeholder="请输入学号/工号" autocomplete="off"></el-input>
+      <el-form-item label="验证邮箱：" prop="email">
+        <el-input v-model="resetData.email"></el-input>
+        <el-button type="primary">发送验证码</el-button>
       </el-form-item>
 
-      <el-form-item label="密码：" prop="password">
-        <el-input type="password" v-model="resetData.password" placeholder="请输入密码" autocomplete="off"></el-input>
+      <el-form-item label="新密码：" prop="password">
+        <el-input type="password" v-model="resetData.password"></el-input>
+      </el-form-item>
+      <el-form-item label="确认密码：" prop="password">
+        <el-input type="password" v-model="resetData.password"></el-input>
       </el-form-item>
       <br>
       <el-form-item>

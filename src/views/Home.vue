@@ -9,25 +9,29 @@
       </el-menu>
     </el-card>
 
-    <el-carousel class="my-carousel" v-if="courses.length">
+    <el-carousel class="my-carousel" v-if="courses.length" trigger="click">
       <el-carousel-item v-for="(course, index) in courses"
                         :key="index"
                         style="cursor:pointer;"
-                        @click="$router.push({path: `/course/${course.courseID}/index`})">
-        <img
-          src="~@/assets/img/logo.png"
-          :alt="course.coursename"
-          :title="course.coursename"
-          @click.prevent=""/>
+                        @click.native="navToCourse(course.courseID)">
+        <img :src="$serverImgUrl + '/img/course/course1.png'" :alt="course.coursename"/>
       </el-carousel-item>
     </el-carousel>
 
     <el-card class="login-box" shadow="never">
       <div class="avatar-box">
-        <el-avatar :src="avatarUrl" :size="100"></el-avatar>
+        <el-avatar :src="$store.state.avatarUrl" :size="100"></el-avatar>
       </div>
       <div class="login-btn-box">
-        <el-button type="success" round>登录/注册</el-button>
+        <el-button v-if="!$store.state.isLogin" type="success" round
+                   @click="$router.push('/auth/login')">
+          登录/注册
+        </el-button>
+
+        <el-button v-else type="success" round
+                   @click="$router.push('/user')">
+          个人中心
+        </el-button>
       </div>
     </el-card>
   </el-row>
@@ -35,8 +39,6 @@
   <el-row class="title-wrapper">
     <div>推荐课程</div>
   </el-row>
-
-
   <CourseCards :courses="courses"></CourseCards>
 
 </MainLayout>
@@ -52,15 +54,16 @@ export default {
   components: {CourseCards, MainLayout},
   data() {
     return {
-      avatarUrl: this.$serverBaseUrl,
-      carouselItems: [],
-      courses: [1,2,3,4],
+      courses: [],
       courseIndex: ['全部课程', '理学', '工学', '哲学', '经济学'],
       tmpUrl: '~@/assets/img/logo.png',
     };
   },
   created() {
-
+    HomeProvider.getAllCourse()
+    .then(res => {
+      this.courses = res.data
+    })
   },
   methods: {
     selectIndex(index) {
@@ -71,6 +74,9 @@ export default {
         }
       })
     },
+    navToCourse(courseID) {
+      this.$router.push('/course/'+ courseID + '/content')
+    }
   },
 }
 </script>
@@ -80,12 +86,6 @@ export default {
   height: 300px;
   .index-box {
     width: 150px;
-    .el-menu {
-      border-right: 0;
-      .el-menu-item:focus{
-        background-color: white;
-      }
-    }
   }
   .my-carousel {
     display: inline-block;

@@ -1,0 +1,28 @@
+<template>
+  <el-card>
+    <component :is="toolBarType"></component>
+  </el-card>
+</template>
+
+<script>
+import ChapterToolBar from "@/components/course/toolBarItem/ChapterToolBar";
+import BulletinToolBar from "@/components/course/toolBarItem/BulletinToolBar";
+import OutlineToolBar from "@/components/course/toolBarItem/OutlineToolBar";
+export default {
+  name: "CourseToolBar",
+  components: {ChapterToolBar, BulletinToolBar, OutlineToolBar},
+  data() {
+    return {
+    }
+  },
+  computed: {
+    toolBarType() {
+      return this.$route.name + 'ToolBar'
+    }
+  }
+}
+</script>
+
+<style scoped>
+
+</style>

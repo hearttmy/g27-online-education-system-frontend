@@ -98,7 +98,7 @@ export default {
             .then(res => {
               console.log(res)
               this.$store.commit('login', res)
-
+              this.$router.push('/')
             })
             .catch(err => {
               console.log(err)

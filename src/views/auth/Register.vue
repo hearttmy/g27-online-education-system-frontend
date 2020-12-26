@@ -8,11 +8,15 @@
     :rules="registerDataRules"
     ref="registerData">
     <el-form-item label="学号/工号：" prop="id">
-      <el-input v-model="registerData.id" placeholder="请输入学号/工号" autocomplete="off"></el-input>
+      <el-input v-model="registerData.id" placeholder="请输入学号/工号"></el-input>
     </el-form-item>
 
     <el-form-item label="姓名：" prop="username">
-      <el-input v-model="registerData.username" placeholder="请输入姓名" autocomplete="off"></el-input>
+      <el-input v-model="registerData.username" placeholder="请输入姓名"></el-input>
+    </el-form-item>
+
+    <el-form-item label="邮箱：" prop="email">
+      <el-input v-model="registerData.email" placeholder="请输入邮箱"></el-input>
     </el-form-item>
 
     <el-form-item label="密码：" prop="password">
@@ -20,7 +24,14 @@
         type="password"
         v-model="registerData.password"
         placeholder="请输入密码"
-        autocomplete="off"
+      ></el-input>
+    </el-form-item>
+
+    <el-form-item label="确认密码：" prop="checkPassword">
+      <el-input
+        type="password"
+        v-model="registerData.checkPassword"
+        placeholder="请重新输入密码"
       ></el-input>
     </el-form-item>
 
@@ -113,6 +124,14 @@ export default {
       }
     };
 
+    const validateCheckPassword = (rule, value, callback) => {
+      if (value !== this.registerData.password) {
+        callback(new Error('两次输入的密码不一致'));
+      } else {
+        callback();
+      }
+    };
+
     const validateUserType = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请选择您的身份！'));
@@ -157,7 +176,9 @@ export default {
       registerData: {
         id: '',
         username: '',
+        email: '',
         password: '',
+        checkPassword: '',
         userType: '',
         faculty: '',
         major: '',
@@ -167,7 +188,9 @@ export default {
       registerDataRules: {
         id: [{ validator: validateId, trigger: 'change' }],
         username: [{ validator: validateUsername, trigger: 'change' }],
+        email: [],
         password: [{ validator: validatePassword, trigger: 'change' }],
+        checkPassword: [{validator: validateCheckPassword, trigger: 'change'}],
         userType: [{ validator: validateUserType, trigger: 'change' }],
         faculty: [{ validator: validateFaculty, trigger: 'change' }],
         major: [{ validator: validateMajor, trigger: 'change' }],
@@ -208,6 +231,7 @@ export default {
           AuthProvider.register(this.registerData)
             .then(res => {
               console.log(res)
+              this.$router.push('/auth/login')
             })
             .catch(err => {
               console.log(err)

@@ -1,14 +1,14 @@
 <template>
   <el-row class="course-wrapper">
-    <el-col :span="span" v-for="(item) in courses" style="padding: 10px" :key="item">
+    <el-col :span="span" v-for="(item) in courses" style="padding-bottom: 20px" :key="item">
       <el-card :body-style="{ padding: '0px' }" shadow="hover"
                @click.native="navToCourse(item.courseID)">
-        <img class="course-cover" :src="$serverImgUrl + '/img/course/KLM.png'">
+        <img class="course-cover" src="~@/assets/img/logo.png">
 
         <div style="padding: 14px;">
-          <p style="font-weight: bold;">{{item.coursename}}</p>
-          <p style="font-size: 15px; color: #999;">开课时间：{{item.DurationTime}}</p>
-          <p style="font-size: 14px; color: #999;">授课老师：{{item.teacherID}}</p>
+          <p>课程标题</p>
+          <p>开课时间</p>
+          <p>课程教师</p>
         </div>
       </el-card>
     </el-col>
@@ -17,25 +17,24 @@
 
 <script>
 export default {
-  name: "CourseCards",
+  name: "CourseLongCards",
   props: {
     courses: Array,
     span: {
       type: Number,
-      default: 6,
+      default: 24,
     }
   },
   methods: {
     navToCourse(courseID) {
       this.$router.push('/course/'+ courseID + '/chapter')
     }
-  }
+  },
 }
 </script>
 
 <style lang="scss" scoped>
 .course-wrapper {
-  margin-top: 15px;
   .course-cover {
     height: 200px;
     width: 100%;

@@ -14,19 +14,24 @@
   </div>
 
   <div class="login-wrapper">
-    <el-link class="login-link" @click="toAuth"
-             :underline="false" v-if="!user.id">
-      登录/注册
+    <el-link class="login-link" @click="toLogin"
+             :underline="false" v-if="!$store.state.isLogin">
+      登录
     </el-link>
+    <span>/</span>
+    <el-link class="login-link" @click="toRegister"
+             :underline="false" v-if="!$store.state.isLogin">
+      注册
+    </el-link>
+    <el-dropdown v-else @command="userCommand">
+      <span class="el-dropdown-link">
+        <el-avatar :src="$store.state.avatarUrl"></el-avatar>
+        {{user.username}}
+        <i class="el-icon-arrow-down el-icon--right"></i>
+      </span>
 
-    <el-dropdown v-else trigger="click" @command="userCommand">
-        <span class="el-dropdown-link">
-          <img class="avatar" :src="$serverBaseUrl" />
-          {{ user.username }}
-          <i class="el-icon-arrow-down el-icon--right"></i>
-        </span>
       <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item command="getOwnInfo">个人中心</el-dropdown-item>
+        <el-dropdown-item command="getOwnInfo">我的信息</el-dropdown-item>
         <el-dropdown-item command="logout">退出登录</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
@@ -47,7 +52,7 @@ export default {
   computed: {
     user() {
       return this.$store.state.user
-    }
+    },
   },
   methods: {
     search() {
@@ -62,16 +67,18 @@ export default {
     logout() {
       this.$store.commit('logout')
     },
-    toAuth() {
-      if (this.$route.path !== '/auth/login')
+    toLogin() {
         this.$router.push('/auth/login')
+    },
+    toRegister() {
+      this.$router.push('/auth/register')
     },
     userCommand(command) {
       if (command === 'logout') {
         this.logout();
       }
       if (command === 'getOwnInfo') {
-        this.$router.push({ path: '/myInfo' });
+        this.$router.push({ path: '/user' });
       }
     },
   },
@@ -107,21 +114,18 @@ export default {
   font-size: 16px;
 }
 
-.avatar {
-  margin-right: 10px;
-  width: 32px;
-  height: 32px;
-  object-fit: cover;
-  vertical-align: middle;
-  border-radius: 50%;
+
+.el-dropdown-link {
+  font-size: 16px;
+  display: inline-block;
+  line-height: 80px;
+  cursor: pointer;
 }
 
-.el-dropdown {
-  padding-left: 20px;
-  line-height: 60px;
-  border-left: 1px solid #ddd;
-  .el-dropdown-link {
-    cursor: pointer;
-  }
+.el-avatar {
+  vertical-align: middle;
 }
+
+
+
 </style>

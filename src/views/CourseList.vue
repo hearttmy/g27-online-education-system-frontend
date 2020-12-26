@@ -3,7 +3,7 @@
   <el-row type="flex">
     <el-card class="index-box" shadow="never">
       <el-menu @select="selectIndex" :default-active="$route.query.index">
-        <el-menu-item v-for="(item, i) in courseIndex" :index="i.toString()">
+        <el-menu-item v-for="(item, i) in courseIndex" :index="i.toString()" :key="item">
           {{item}}
         </el-menu-item>
       </el-menu>
@@ -66,14 +66,8 @@ export default {
 
 <style lang="scss" scoped>
 .index-box {
-  width: 200px;
+  width: 150px !important;
   height: 400px;
-  .el-menu {
-    border-right: 0;
-    .el-menu-item.is-active {
-      background-color: #ecf5ff;
-    }
-  }
 }
 
 .list-wrapper {
