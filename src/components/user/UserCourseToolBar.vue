@@ -12,20 +12,40 @@
       <el-dialog title="添加课程" :visible.sync="addCourseDialog">
         <el-form :model="addCourseForm">
           <el-form-item label="课程名称" :label-width="'120px'">
-            <el-input v-model="addCourseForm.courseName" style="width: 300px"></el-input>
+            <el-input v-model="addCourseForm.coursename" style="width: 300px"></el-input>
           </el-form-item>
 
           <el-form-item label="课程分类" :label-width="'120px'">
-            <el-select v-model="addCourseForm.courseType" placeholder="请选择">
+            <el-select v-model="addCourseForm.coursetype" placeholder="请选择">
               <el-option
                 v-for="(item, i) in courseIndex"
                 :key="i"
                 :label="item"
-                :value="i"
+                :value="item"
               ></el-option>
             </el-select>
           </el-form-item>
 
+          <el-form-item label="课程持续时间" :label-width="'120px'">
+            <el-select
+              v-model="addCourseForm.Year" placeholder="请选择">
+              <el-option
+                v-for="item in courseYear"
+                :key="item"
+                :label="item"
+                :value="item">
+              </el-option>
+            </el-select>
+            <el-select
+              v-model="addCourseForm.Season"  style="margin-left: 20px" placeholder="请选择">
+              <el-option
+                v-for="item in courseSeason"
+                :key="item"
+                :label="item"
+                :value="item">
+              </el-option>
+            </el-select>
+          </el-form-item>
         </el-form>
 
         <div slot="footer" class="dialog-footer">
@@ -38,17 +58,30 @@
 </template>
 
 <script>
+import UserProvider from "@/network/request/user";
+
 export default {
   name: "UserCourseToolBar",
   data() {
     return {
       input: '',
       addCourseDialog: false,
-      courseIndex: ['全部课程', '理学', '工学', '哲学', '经济学'],
+      courseIndex: ['理学', '工学', '哲学', '经济学'],
+      courseYear: [],
+      courseSeason: ['春夏', '春', '夏', '秋冬', '秋', '冬'],
       addCourseForm: {
-        courseName: '',
-        courseType: 0,
+        coursename: '',
+        Year: '',
+        Season: '',
+        DurationTime: '',
+        coursetype: '',
       },
+    }
+  },
+  created() {
+    for (let i = 0; i < 5; i++) {
+      const date = new Date();
+      this.courseYear.push(date.getFullYear() - i);
     }
   },
   methods: {
@@ -56,7 +89,23 @@ export default {
 
     },
     addCourse() {
+      this.addCourseForm.DurationTime = this.addCourseForm.Year + this.addCourseForm.Season
+      console.log(this.addCourseForm)
+      UserProvider.addCourse(this.addCourseForm,
+        {headers: {'Authorization': this.$store.state.token} })
+      .then(res => {
+        console.log(res)
+        if (res.state) {
+          this.$message({
+            showClose: true,
+            message: '添加课程成功',
+            type: 'success',
+          });
+        }
+      })
+      .catch(err => {
 
+      })
       this.addCourseDialog = false
     },
   }

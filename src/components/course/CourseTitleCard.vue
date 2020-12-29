@@ -2,11 +2,10 @@
   <el-card class="course-title-wrapper" >
     <div class="text-wrapper">
       <div style="font-weight: bold; font-size: 24px">
-        {{course.coursename}}
+        {{course.courseName}}
       </div>
       <div style="margin-top: 20px">
         <span style="margin-right: 20px">{{course.DurationTime}}</span>
-        <span>{{course.DurationTime}}</span>
       </div>
       <div style="margin-top: 35px">
         <p style="font-weight: bold">授课老师</p>

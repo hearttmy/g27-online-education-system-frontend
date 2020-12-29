@@ -6,7 +6,7 @@
         <img class="course-cover" :src="$serverImgUrl + item.img">
 
         <div style="padding: 14px;">
-          <p style="font-weight: bold;">{{item.coursename}}</p>
+          <p style="font-weight: bold;">{{item.courseName}}</p>
           <p style="font-size: 15px; color: #999;">开课时间：{{item.DurationTime}}</p>
           <p style="font-size: 14px; color: #999;">授课老师：{{item.teacherID}}</p>
         </div>

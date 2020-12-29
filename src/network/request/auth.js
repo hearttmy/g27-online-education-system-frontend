@@ -14,9 +14,16 @@ const AuthProvider = {
     }
   },
   login: (payload) => {
-    return http.post('/login', payload)
-      .then(res => res.data)
-      .catch(err => err)
+    if (payload.userType === 1) {
+      return http.post('/login1', payload)
+        .then(res => res.data)
+        .catch(err => err)
+    }
+    else {
+      return http.post('/login', payload)
+        .then(res => res.data)
+        .catch(err => err)
+    }
   },
   reset: (payload) => {
     return http.post('/reset', payload)

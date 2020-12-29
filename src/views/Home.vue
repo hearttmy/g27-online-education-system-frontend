@@ -62,6 +62,7 @@ export default {
   created() {
     HomeProvider.getAllCourse()
     .then(res => {
+      console.log(res)
       this.courses = res.data
     })
   },

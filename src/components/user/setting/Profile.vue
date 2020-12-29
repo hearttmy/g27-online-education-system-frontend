@@ -4,8 +4,8 @@
       :model="userData"
       label-position="left"
       label-width="100px"
-      status-icon
-      ref="loginData">
+      status-icon :rule="rules"
+      ref="userData">
 
       <el-form-item label="头像：">
         <el-avatar :src="$store.state.avatarUrl" :size="100"></el-avatar>
@@ -21,57 +21,101 @@
       </el-form-item>
 
       <el-form-item label="学号/工号：">
-        <span>{{userData.id}}</span>
-      </el-form-item>
-
-      <el-form-item label="用户名：">
-        <el-input  v-model="userData.username" :disabled="disableFlag"></el-input>
-      </el-form-item>
-      <el-form-item label="真实姓名：">
-        <el-input  v-model="userData.username" :disabled="disableFlag"></el-input>
+        <span>{{$store.state.user.id}}</span>
       </el-form-item>
 
       <el-form-item label="个人邮箱：">
-        <el-input  v-model="userData.username" :disabled="disableFlag"></el-input>
+        <span>{{$store.state.user.email}}</span>
+      </el-form-item>
+
+      <el-form-item label="真实姓名：" prop="realName">
+        <el-input  v-model="userData.realName"></el-input>
+      </el-form-item>
+
+      <el-form-item label="用户名：" prop="userName">
+        <el-input  v-model="userData.username"></el-input>
       </el-form-item>
 
       <el-form-item label="联系电话：">
-        <el-input  v-model="userData.username" :disabled="disableFlag"></el-input>
+        <el-input  v-model="userData.phone"></el-input>
       </el-form-item>
 
       <el-form-item label="性别：">
-        <el-input  v-model="userData.username" :disabled="disableFlag"></el-input>
+        <el-radio v-model="userData.gender" label="1">男</el-radio>
+        <el-radio v-model="userData.gender" label="2">女</el-radio>
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" @click="edit">修改</el-button>
-        <el-button type="success">保存</el-button>
+        <el-button type="success" @click="submitForm('userData')"
+                   :loading="submitting">保存</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script>
+import UserProvider from "@/network/request/user";
+import User from "@/views/User";
+
 export default {
   name: "Profile",
   data() {
     return {
-      userData: {},
+      userData: {
+        realName: '',
+        username: '',
+        phone: '',
+        gender: '',
+      },
       disableFlag: true,
       tokenHeader: {'Authorization': this.$store.state.token},
+      rules: {
+        userName: [
+          {required: true, min: 1, message: '用户名不得为空', trigger: 'change'}
+        ],
+        realName: [
+          {required: true, min: 1, message: '真实姓名不得为空', trigger: 'change'}
+        ],
+      },
+      submitting: false,
     }
   },
   created() {
-    this.userData = JSON.parse(JSON.stringify(this.$store.state.user))
+    this.userData.username = this.$store.state.user.username
+    this.userData.realName = this.$store.state.user.realName
+    this.userData.phone = this.$store.state.user.phone
+    this.userData.gender = this.$store.state.user.gender
   },
   methods: {
-    edit() {
-      this.disableFlag = false
-    },
     handleAvatarSuccess(res, file) {
       console.log(res)
       this.$store.commit('changeAvatar', res)
       this.$router.go(0);
+    },
+    submitForm(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          this.submitting = true
+          UserProvider.changeInfo(this.userData,
+            {headers: {'Authorization': this.$store.state.token} })
+          .then(res => {
+            console.log(res)
+            if (res.state) {
+              this.$message({
+                showClose: true,
+                message: '个人信息修改成功',
+                type: 'success',
+              });
+              this.$store.commit('updateUser', res.user)
+              this.$router.go(0);
+            }
+          })
+          .catch(err => {
+
+          })
+        }
+      })
+      this.submitting = false
     }
   }
 }

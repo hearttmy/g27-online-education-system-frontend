@@ -97,12 +97,18 @@ export default {
           AuthProvider.login(this.loginData)
             .then(res => {
               if (res.state === true) {
+                this.$message({
+                  showClose: true,
+                  message: '登录成功',
+                  type: 'success',
+                });
                 console.log(res)
                 res.user['userType'] = this.loginData.userType
                 this.$store.commit('login', res)
                 this.$router.push('/')
               }
               else {
+                console.log(res)
                 this.$message({
                   showClose: true,
                   message: '用户名或密码错误',

@@ -31,6 +31,10 @@ const store = new Vuex.Store({
       state.user.avatar = res.avatar
       this.commit('setSessionStorage')
     },
+    updateUser(state, res) {
+      state.user = res
+      this.commit('setSessionStorage')
+    },
     setSessionStorage(state) {
       sessionStorage.setItem('state', JSON.stringify(state))
     },

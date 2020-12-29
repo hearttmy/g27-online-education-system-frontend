@@ -14,15 +14,16 @@
         <span style="font-weight: bold; font-size: 20px;">{{this.activeIndex}}</span>
         <el-pagination
           background small style="float: right;"
-          layout="prev, slot, next, jumper">
-          <span>{{ currentPage }}/{{ totalPage }}</span>
+          layout="prev, slot, next, jumper" :page-count="totalPage"
+          :current-page.sync="currentPage">
+          <span class="page-span">{{ currentPage }}/{{ totalPage }}</span>
         </el-pagination>
 
-        <el-tab-pane label="全部" name="first">
-          <CourseCards :courses="courseList" :span="8"></CourseCards>
+        <el-tab-pane label="全部" name="all">
+          <CourseCards :courses="courseListInPage" :span="8"></CourseCards>
         </el-tab-pane>
-        <el-tab-pane label="正在进行" name="second">
-          <CourseCards :courses="courseList" :span="8"></CourseCards>
+        <el-tab-pane label="正在进行" name="current">
+          <CourseCards :courses="courseListInPage" :span="8"></CourseCards>
         </el-tab-pane>
       </el-tabs>
 
@@ -35,6 +36,7 @@
 <script>
 import MainLayout from "@/components/common/MainLayout";
 import CourseCards from "@/components/courseList/CourseCards";
+import CourseListProvider from "@/network/request/courseList";
 
 export default {
   name: "CourseList",
@@ -43,23 +45,37 @@ export default {
     return {
       courseIndex: ['全部课程', '理学', '工学', '哲学', '经济学'],
       activeIndex: '',
-      courses: [1, 2, 3, 4, 5, 6],
-      activeName: 'first',
+      courses: [],
+      activeName: 'all',
+      pageSize: 6,
       currentPage: 1,
-      totalPage: 1,
     }
   },
   created() {
     this.activeIndex = this.courseIndex[this.$route.query.index]
+    this.getCourse(this.activeIndex)
   },
   computed: {
     courseList() {
       switch (this.activeName) {
-        case "first":
+        case 'all':
           return this.courses
-        case "second":
-          return this.courses
+        case 'current':
+          return this.courses.filter(course => {
+            return course.state === '1'
+          })
       }
+    },
+    courseListInPage() {
+      if (this.currentPage * 6 <= this.courses.length) {
+        return this.courseList.slice((this.currentPage - 1) * 6, this.currentPage * 6)
+      }
+      else {
+        return this.courseList.slice((this.currentPage - 1) * 6, this.courses.length)
+      }
+    },
+    totalPage() {
+      return Math.ceil(this.courseList.length / this.pageSize)
     }
   },
   methods: {
@@ -71,8 +87,24 @@ export default {
           index,
         }
       })
+      this.activeName = 'all'
+      this.getCourse(this.activeIndex)
     },
-  }
+
+    getCourse(courseType) {
+      CourseListProvider.getCourseByType({
+        params: {
+          'type': courseType,
+        }
+      })
+      .then(res => {
+        this.courses = res
+      })
+      .catch(err => {
+
+      })
+    },
+  },
 }
 </script>
 
@@ -85,13 +117,11 @@ export default {
 .list-wrapper {
   margin-left: 30px;
   padding-top: 25px;
+  width: 930px;
 }
 
-.course-wrapper {
-  margin-top: 15px;
-  .course-cover {
-    height: 200px;
-    width: 100%;
-  }
+.page-span {
+  min-width: 0px !important;
 }
+
 </style>

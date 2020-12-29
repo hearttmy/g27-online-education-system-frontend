@@ -11,7 +11,11 @@
       <el-input v-model="registerData.id" placeholder="请输入学号/工号"></el-input>
     </el-form-item>
 
-    <el-form-item label="姓名：" prop="username">
+    <el-form-item label="真实姓名：" prop="realName">
+      <el-input v-model="registerData.realName" placeholder="请输入真实姓名"></el-input>
+    </el-form-item>
+
+    <el-form-item label="用户名：" prop="username">
       <el-input v-model="registerData.username" placeholder="请输入姓名"></el-input>
     </el-form-item>
 
@@ -70,7 +74,14 @@ export default {
         callback();
       }
     };
-
+    const validateRealName = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入真实姓名'));
+      }
+      else {
+        callback();
+      }
+    };
     const validateUsername = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入姓名'));
@@ -116,6 +127,7 @@ export default {
       },
       registerDataRules: {
         id: [{ validator: validateId, trigger: 'change' }],
+        realName: [{validator: validateRealName, trigger: 'change'}],
         username: [{ validator: validateUsername, trigger: 'change' }],
         email: [],
         password: [{ validator: validatePassword, trigger: 'change' }],
@@ -140,7 +152,14 @@ export default {
           AuthProvider.register(this.registerData)
             .then(res => {
               console.log(res)
-              this.$router.push('/auth/login')
+              if (res.state) {
+                this.$message({
+                  showClose: true,
+                  message: '注册成功',
+                  type: 'success',
+                });
+                this.$router.push('/auth/login')
+              }
             })
             .catch(err => {
               console.log(err)
