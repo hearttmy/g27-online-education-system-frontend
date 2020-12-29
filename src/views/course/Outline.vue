@@ -54,7 +54,9 @@
 <script>
 export default {
   name: "Outline",
-
+  props: {
+    course: Object,
+  },
 }
 </script>
 

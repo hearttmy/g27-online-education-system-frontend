@@ -15,7 +15,9 @@
 <script>
 export default {
   name: "Bulletin",
-
+  props: {
+    course: Object,
+  },
 }
 </script>
 

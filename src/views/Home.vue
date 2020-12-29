@@ -3,7 +3,7 @@
   <el-row type="flex" class="carousel-wrapper" justify="space-between">
     <el-card class="index-box" shadow="never">
       <el-menu @select="selectIndex">
-        <el-menu-item v-for="(item, i) in courseIndex" :index="i.toString()">
+        <el-menu-item v-for="(item, i) in courseIndex" :index="i.toString()" :key="i">
           {{item}}
         </el-menu-item>
       </el-menu>
@@ -14,7 +14,7 @@
                         :key="index"
                         style="cursor:pointer;"
                         @click.native="navToCourse(course.courseID)">
-        <img :src="$serverImgUrl + '/img/course/course1.png'" :alt="course.coursename"/>
+        <img :src="$serverImgUrl + course.img" :alt="course.coursename"/>
       </el-carousel-item>
     </el-carousel>
 

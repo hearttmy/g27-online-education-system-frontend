@@ -84,7 +84,7 @@ export default {
         password: [{ validator: validatePassword, trigger: 'change' }],
         userType: [{ validator: validateUserType, trigger: 'change' }]
       },
-      options: [{ value: 0, label: '学生' }, { value: 1, label: '教师' }],
+      options: [{ value: 0, label: '学生' }, { value: 1, label: '教师' }, {value: 2, label: '助教'}],
 
       submitting: false
     };
@@ -96,9 +96,19 @@ export default {
           this.submitting = true
           AuthProvider.login(this.loginData)
             .then(res => {
-              console.log(res)
-              this.$store.commit('login', res)
-              this.$router.push('/')
+              if (res.state === true) {
+                console.log(res)
+                res.user['userType'] = this.loginData.userType
+                this.$store.commit('login', res)
+                this.$router.push('/')
+              }
+              else {
+                this.$message({
+                  showClose: true,
+                  message: '用户名或密码错误',
+                  type: 'warning'
+                });
+              }
             })
             .catch(err => {
               console.log(err)

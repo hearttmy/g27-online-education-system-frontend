@@ -1,18 +1,16 @@
 <template>
 <MainLayout :lg="20">
   <div>
-    <CourseTitleCard></CourseTitleCard>
+    <CourseTitleCard :course="course"></CourseTitleCard>
   </div>
   <div>
-    <CourseNavBar></CourseNavBar>
+    <CourseNavBar :course="course"></CourseNavBar>
   </div>
   <div class="tool-bar-wrapper">
-    <CourseToolBar></CourseToolBar>
+    <CourseToolBar :course="course" @changeDeleteMode="changeDeleteMode"></CourseToolBar>
   </div>
   <div class="content-wrapper">
-    <transition name="slide-fade" mode="out-in">
-      <router-view></router-view>
-    </transition>
+    <router-view :course="course" :deleteMode="deleteMode"></router-view>
   </div>
 </MainLayout>
 </template>
@@ -22,10 +20,33 @@ import MainLayout from "@/components/common/MainLayout";
 import CourseTitleCard from "@/components/course/CourseTitleCard";
 import CourseNavBar from "@/components/course/CourseNavBar";
 import CourseToolBar from "@/components/course/CourseToolBar";
+import CourseProvider from "@/network/request/course";
 
 export default {
   name: "Course",
   components: {CourseToolBar, CourseNavBar, CourseTitleCard, MainLayout},
+  data() {
+    return {
+      course: {},
+      deleteMode: false,
+    }
+  },
+  created() {
+    CourseProvider.getCourseInfo({
+      params: {
+        'courseID': this.$route.params.course_id
+      }
+    })
+    .then(res => {
+      console.log(res)
+      this.course = res
+    })
+  },
+  methods: {
+    changeDeleteMode() {
+      this.deleteMode = !this.deleteMode
+    }
+  }
 }
 </script>
 

@@ -1,27 +1,49 @@
 <template>
-  <el-card class="course-title-wrapper">
-    <div style="font-weight: bold; font-size: 24px">
-      程序设计方法学
+  <el-card class="course-title-wrapper" >
+    <div class="text-wrapper">
+      <div style="font-weight: bold; font-size: 24px">
+        {{course.coursename}}
+      </div>
+      <div style="margin-top: 20px">
+        <span style="margin-right: 20px">{{course.DurationTime}}</span>
+        <span>{{course.DurationTime}}</span>
+      </div>
+      <div style="margin-top: 35px">
+        <p style="font-weight: bold">授课老师</p>
+        <p>
+          <span v-for="(item, i) in course.teacher" :key="i">{{item.username}} </span>
+        </p>
+      </div>
+
     </div>
-    <div style="margin-top: 20px">
-      2020-2021 2020-2021冬 计算机科学与技术学院
-    </div>
-    <div style="margin-top: 35px">
-      <p style="font-weight: bold">授课老师</p>
-      <p>翁恺</p>
+    <div class="img-wrapper">
+      <img :src="$serverImgUrl + course.img">
     </div>
   </el-card>
 </template>
 
 <script>
 export default {
-name: "CourseTitleCard"
+  name: "CourseTitleCard",
+  props: {
+    course: Object,
+  },
+
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .course-title-wrapper {
-  height: 200px;
-
+  .text-wrapper {
+    display: inline-block;
+  }
+  .img-wrapper {
+    float: right;
+    margin-left: 300px;
+    img {
+      width: 300px;
+      height: 170px;
+    }
+  }
 }
 </style>

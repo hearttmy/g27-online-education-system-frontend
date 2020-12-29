@@ -1,9 +1,9 @@
 <template>
   <el-row class="course-wrapper">
-    <el-col :span="span" v-for="(item) in courses" style="padding: 10px" :key="item">
+    <el-col :span="span" v-for="(item, index) in courses" style="padding: 10px" :key="index">
       <el-card :body-style="{ padding: '0px' }" shadow="hover"
                @click.native="navToCourse(item.courseID)">
-        <img class="course-cover" :src="$serverImgUrl + '/img/course/KLM.png'">
+        <img class="course-cover" :src="$serverImgUrl + item.img">
 
         <div style="padding: 14px;">
           <p style="font-weight: bold;">{{item.coursename}}</p>

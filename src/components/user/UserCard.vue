@@ -3,7 +3,7 @@
     <div class="avatar-box">
       <el-avatar :src="$store.state.avatarUrl" :size="80"/>
       <p>{{$store.state.user.username}}</p>
-      <p>学生</p>
+      <p>{{$store.state.user.userType === 0 ? '学生':'教师'}}</p>
     </div>
     <div>
       <el-menu :default-active="$route.path" @select="selectIndex">

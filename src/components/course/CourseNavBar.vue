@@ -10,9 +10,6 @@
       <el-menu-item :index="'/course/' + course_id + '/outline'">
         <i class="el-icon-warning-outline"></i>课程信息
       </el-menu-item>
-      <el-menu-item :index="'/course/' + course_id + '/courseware'">
-        <i class="el-icon-folder"></i>课件
-      </el-menu-item>
       <el-menu-item :index="'/course/' + course_id + '/homework'">
         <i class="el-icon-edit"></i>作业
       </el-menu-item>

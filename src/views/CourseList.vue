@@ -11,6 +11,13 @@
 
     <div class="list-wrapper">
       <el-tabs v-model="activeName">
+        <span style="font-weight: bold; font-size: 20px;">{{this.activeIndex}}</span>
+        <el-pagination
+          background small style="float: right;"
+          layout="prev, slot, next, jumper">
+          <span>{{ currentPage }}/{{ totalPage }}</span>
+        </el-pagination>
+
         <el-tab-pane label="全部" name="first">
           <CourseCards :courses="courseList" :span="8"></CourseCards>
         </el-tab-pane>
@@ -18,6 +25,7 @@
           <CourseCards :courses="courseList" :span="8"></CourseCards>
         </el-tab-pane>
       </el-tabs>
+
     </div>
   </el-row>
 
@@ -34,9 +42,15 @@ export default {
   data() {
     return {
       courseIndex: ['全部课程', '理学', '工学', '哲学', '经济学'],
+      activeIndex: '',
       courses: [1, 2, 3, 4, 5, 6],
       activeName: 'first',
+      currentPage: 1,
+      totalPage: 1,
     }
+  },
+  created() {
+    this.activeIndex = this.courseIndex[this.$route.query.index]
   },
   computed: {
     courseList() {
@@ -50,9 +64,7 @@ export default {
   },
   methods: {
     selectIndex(index) {
-      if (this.$route.query.index === index) {
-        return
-      }
+      this.activeIndex = this.courseIndex[index]
       this.$router.push({
         name: 'courseList',
         query: {

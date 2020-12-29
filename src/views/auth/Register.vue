@@ -46,41 +46,6 @@
       </el-select>
     </el-form-item>
 
-    <el-form-item label="学院/系：" prop="faculty">
-      <el-select v-model="registerData.faculty" filterable placeholder="请选择">
-        <el-option v-for="(item, key) in faculty" :key="key" :label="key" :value="key"></el-option>
-      </el-select>
-    </el-form-item>
-
-    <div v-if="registerData.userType === 0">
-      <el-form-item label="年级：" prop="grade">
-        <el-select v-model="registerData.grade" placeholder="请选择">
-          <el-option v-for="item in gradeOptions" :key="item" :label="item" :value="item"></el-option>
-        </el-select>
-      </el-form-item>
-
-      <el-form-item label="专业：" prop="major">
-        <el-select v-model="registerData.major" filterable placeholder="请选择">
-          <el-option
-            v-for="(item, key) in faculty[registerData.faculty]"
-            :key="key"
-            :label="key"
-            :value="key"
-          ></el-option>
-        </el-select>
-      </el-form-item>
-
-      <el-form-item v-if="faculty[registerData.faculty]" label="班别：" prop="sclass">
-        <el-select v-model="registerData.sclass" filterable placeholder="请选择">
-          <el-option
-            v-for="item in faculty[registerData.faculty][registerData.major]"
-            :key="item"
-            :label="item"
-            :value="item"
-          ></el-option>
-        </el-select>
-      </el-form-item>
-    </div>
 
     <span class="change-tab" @click="$router.push('/auth/login')">已有账号？马上登录</span>
 
@@ -140,38 +105,6 @@ export default {
       }
     };
 
-    const validateFaculty = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请选择所属院系！'));
-      } else {
-        callback();
-      }
-    };
-
-    const validateMajor = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请选择所属专业！'));
-      } else {
-        callback();
-      }
-    };
-
-    const validateGrade = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请选择所属年级！'));
-      } else {
-        callback();
-      }
-    };
-
-    const validateSclass = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请选择所属班别！'));
-      } else {
-        callback();
-      }
-    };
-
     return {
       registerData: {
         id: '',
@@ -180,10 +113,6 @@ export default {
         password: '',
         checkPassword: '',
         userType: '',
-        faculty: '',
-        major: '',
-        grade: '',
-        sclass: '',
       },
       registerDataRules: {
         id: [{ validator: validateId, trigger: 'change' }],
@@ -192,34 +121,14 @@ export default {
         password: [{ validator: validatePassword, trigger: 'change' }],
         checkPassword: [{validator: validateCheckPassword, trigger: 'change'}],
         userType: [{ validator: validateUserType, trigger: 'change' }],
-        faculty: [{ validator: validateFaculty, trigger: 'change' }],
-        major: [{ validator: validateMajor, trigger: 'change' }],
-        grade: [{ validator: validateGrade, trigger: 'change' }],
-        sclass: [{ validator: validateSclass, trigger: 'change' }]
       },
       userTypeOptions: [
         { value: 0, label: '学生' },
         { value: 1, label: '教师' }
       ],
-      gradeOptions: [],
-      faculty: {
-        ['计算机工程学院']: {
-          ['软件工程']: [1, 2]
-        }
-      },
 
       submitting: false
     };
-  },
-  created() {
-    for (let i = 1; i <= 5; i++) {
-      const date = new Date()
-      if (date.getMonth() > 8 && i === 1) {
-        this.gradeOptions.push(date.getFullYear())
-        continue;
-      }
-      this.gradeOptions.push(date.getFullYear() - i)
-    }
   },
   methods: {
     login() {

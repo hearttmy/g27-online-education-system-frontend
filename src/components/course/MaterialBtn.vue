@@ -1,14 +1,51 @@
 <template>
-  <div style="padding-left: 20px">
+  <div style="padding-left: 20px; margin-top: 20px">
     <i class="el-icon-folder"></i>
-    <span style="margin: 0 10px">chapter1</span>
-    <el-button size="mini">下载文件</el-button>
+    <el-link :href="$serverBaseUrl + file.Fileurl" target="_blank"
+             style="margin: 0 10px">{{file.Filename}}</el-link>
+    <el-button size="mini" @click="download">下载文件</el-button>
+    <el-button v-if="deleteMode"  size="mini" type="danger" @click="deleteFile">删除文件</el-button>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
-name: "MaterialBtn"
+  name: "MaterialBtn",
+  props: {
+    file: Object,
+    deleteMode: Boolean,
+  },
+  methods: {
+    deleteFile() {
+
+    },
+    download() {
+      axios.get(this.$serverBaseUrl + this.file.Fileurl, {
+          responseType: 'blob',
+        })
+        .then(res => {
+          if (res) {
+            const blob = new Blob([res.data]);
+            if ('download' in document.createElement('a')) {
+              //支持a标签download的浏览器
+              const link = document.createElement('a')//创建a标签
+              link.download = this.file.Filename//a标签添加属性
+              link.style.display = 'none'
+              link.href = URL.createObjectURL(blob)
+              document.body.appendChild(link)
+              link.click()
+              URL.revokeObjectURL(link.href) //释放url
+              document.body.removeChild(link)//释放标签
+            }
+          }
+        })
+        .catch((err) => {
+          //err
+        });
+    }
+  },
 }
 </script>
 

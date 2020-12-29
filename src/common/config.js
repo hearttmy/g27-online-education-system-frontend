@@ -1,4 +1,4 @@
-const BaseUrl = 'http://10.181.252.111:2088'
+const BaseUrl = 'http://10.180.29.134:2088'
 export default {
   serverBaseUrl: BaseUrl,
   serverApiUrl: BaseUrl + '/api',

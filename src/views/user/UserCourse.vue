@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="tool-bar">
-      <CourseToolBar></CourseToolBar>
+      <UserCourseToolBar></UserCourseToolBar>
     </div>
     <div class="course-list-wrapper">
       <CourseLongCards :courses="courses"></CourseLongCards>
@@ -11,12 +11,12 @@
 </template>
 
 <script>
-import CourseToolBar from "@/components/user/CourseToolBar";
+import UserCourseToolBar from "@/components/user/UserCourseToolBar";
 import CourseLongCards from "@/components/courseList/CourseLongCards";
 
 export default {
   name: "UserCourse",
-  components: {CourseToolBar, CourseLongCards},
+  components: {UserCourseToolBar, CourseLongCards},
   data() {
     return  {
       courses: [1, 2, 3, 4],

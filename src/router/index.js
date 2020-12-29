@@ -131,14 +131,6 @@ const routes = [
         }
       },
       {
-        path: 'courseware',
-        name: 'courseware',
-        component: () => import('@/views/course/Chapter'),
-        meta: {
-          title: '课件',
-        }
-      },
-      {
         path: 'homework',
         name: 'homework',
         component: () => import('@/views/course/Chapter'),

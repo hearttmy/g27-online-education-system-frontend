@@ -18,7 +18,7 @@
              :underline="false" v-if="!$store.state.isLogin">
       登录
     </el-link>
-    <span>/</span>
+    <span v-if="!$store.state.isLogin"> / </span>
     <el-link class="login-link" @click="toRegister"
              :underline="false" v-if="!$store.state.isLogin">
       注册
