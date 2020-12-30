@@ -6,18 +6,18 @@ const CourseProvider  = {
       .then(res => res.data)
       .catch(err => err)
   },
-  addChapter: (payload) => {
-    return http.post('/course/addchapter', payload)
+  addChapter: (payload, config) => {
+    return http.post('/course/addchapter', payload, config)
       .then(res => res.data)
       .catch(err => err)
   },
-  deleteChapter: (payload) => {
-    return http.post('/course/addchapter', payload)
+  deleteChapter: (payload, config) => {
+    return http.post('/course/delchapter', payload, config)
       .then(res => res.data)
       .catch(err => err)
   },
-  deleteFile: (payload) => {
-    return http.post('/course/addchapter', payload)
+  deleteFile: (payload, config) => {
+    return http.post('/course/delFile', payload, config)
       .then(res => res.data)
       .catch(err => err)
   },

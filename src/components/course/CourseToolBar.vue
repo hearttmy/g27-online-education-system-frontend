@@ -1,6 +1,7 @@
 <template>
   <el-card>
-    <component :is="toolBarType" :course="course" @changeDeleteMode="changeDeleteMode"></component>
+    <component :is="toolBarType" :course="course" @changeDeleteMode="changeDeleteMode"
+      @updateCourseInfo="updateCourseInfo"></component>
   </el-card>
 </template>
 
@@ -28,6 +29,9 @@ export default {
   methods: {
     changeDeleteMode() {
       this.$emit('changeDeleteMode')
+    },
+    updateCourseInfo() {
+      this.$emit('updateCourseInfo')
     }
   }
 }

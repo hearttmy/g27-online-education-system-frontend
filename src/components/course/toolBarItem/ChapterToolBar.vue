@@ -31,6 +31,7 @@
 
         <el-form-item label="上传文件" :label-width="'120px'">
           <el-upload :action="$serverApiUrl + '/course/addFile'"
+                     :headers="tokenHeader"
                      :data="addFileForm" :on-success="handleFileSuccess"
                      ref="upload" :auto-upload="false" :on-change="handleFileChange">
             <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
@@ -60,6 +61,7 @@ export default {
   },
   data() {
     return {
+      tokenHeader: {'Authorization': this.$store.state.token},
       addChapterDialog: false,
       addChapterForm: {
         chapterName: '',
@@ -81,9 +83,11 @@ export default {
       const tmp = {}
       tmp['ChapterName'] = this.addChapterForm.chapterName
       tmp['courseID'] = this.$route.params.course_id
-      CourseProvider.addChapter(tmp)
+      CourseProvider.addChapter(tmp,
+        {headers: {'Authorization': this.$store.state.token}})
       .then(res => {
         console.log(res)
+        this.$emit('updateCourseInfo')
       })
       .catch(err => {
 

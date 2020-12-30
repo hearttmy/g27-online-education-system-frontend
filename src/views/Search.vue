@@ -1,46 +1,57 @@
 <template>
-  <MainLayout>
-    <span class="header-title">搜索结果</span>
+  <MainLayout :lg="14">
+    <div class="search-title">
+      <span>搜索结果</span>
+    </div>
+
     <ResultList :data="result"></ResultList>
   </MainLayout>
 </template>
 
 <script>
 import MainLayout from "@/components/common/MainLayout";
-import ResultList from "@/components/search/resultList";
+import ResultList from "@/components/search/ResultList";
+import SearchProvider from "@/network/request/search";
 
 export default {
   name: "Search",
   components: {ResultList, MainLayout},
   data () {
     return {
-      activeName: '',
       result: [],
     }
   },
   watch: {
     '$route.query.key': function (newSearchKey) {
-      this.preSearch(newSearchKey)
+      this.search(newSearchKey)
     }
   },
   created () {
-    this.preSearch(this.$route.query.key)
+    this.search(this.$route.query.key)
   },
   methods: {
-    preSearch(searchKey) {
-      if (!searchKey) {
-        this.$router.replace({name: 'homepage'})
-        return
-      }
-      this.search(searchKey)
-    },
     search(searchKey) {
+      SearchProvider.search({
+          params: {
+            'title': searchKey
+          }
+      })
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => {
 
+      })
     },
   },
 }
 </script>
 
 <style scoped>
-
+.search-title {
+  font-size: 25px;
+  font-weight: bold;
+  border-bottom: 1px solid #ddd;
+  padding: 20px;
+}
 </style>

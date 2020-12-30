@@ -7,10 +7,12 @@
     <CourseNavBar :course="course"></CourseNavBar>
   </div>
   <div class="tool-bar-wrapper">
-    <CourseToolBar :course="course" @changeDeleteMode="changeDeleteMode"></CourseToolBar>
+    <CourseToolBar :course="course" @changeDeleteMode="changeDeleteMode"
+      @updateCourseInfo="updateCourseInfo"></CourseToolBar>
   </div>
   <div class="content-wrapper">
-    <router-view :course="course" :deleteMode="deleteMode"></router-view>
+    <router-view :course="course" :deleteMode="deleteMode"
+      @updateCourseInfo="updateCourseInfo"></router-view>
   </div>
 </MainLayout>
 </template>
@@ -32,20 +34,23 @@ export default {
     }
   },
   created() {
-    CourseProvider.getCourseInfo({
-      params: {
-        'courseID': this.$route.params.course_id
-      }
-    })
-    .then(res => {
-      console.log(res)
-      this.course = res
-    })
+    this.updateCourseInfo()
   },
   methods: {
     changeDeleteMode() {
       this.deleteMode = !this.deleteMode
-    }
+    },
+    updateCourseInfo() {
+      CourseProvider.getCourseInfo({
+        params: {
+          'courseID': this.$route.params.course_id
+        }
+      })
+      .then(res => {
+        // console.log(res)
+        this.course = res
+      })
+    },
   }
 }
 </script>

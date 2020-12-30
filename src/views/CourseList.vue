@@ -35,7 +35,7 @@
 
 <script>
 import MainLayout from "@/components/common/MainLayout";
-import CourseCards from "@/components/courseList/CourseCards";
+import CourseCards from "@/components/common/CourseCards";
 import CourseListProvider from "@/network/request/courseList";
 
 export default {

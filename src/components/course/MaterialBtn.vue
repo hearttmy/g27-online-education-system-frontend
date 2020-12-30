@@ -10,16 +10,30 @@
 
 <script>
 import axios from 'axios'
+import CourseProvider from "@/network/request/course";
 
 export default {
   name: "MaterialBtn",
   props: {
     file: Object,
+    courseID: String,
+    chapterID: String,
     deleteMode: Boolean,
   },
   methods: {
     deleteFile() {
+      const tmp = {}
+      tmp['courseID'] = this.courseID
+      tmp['chapterID'] = this.chapterID
+      tmp['fileName'] = this.file.Filename
+      CourseProvider.deleteFile(tmp,
+        {headers: {'Authorization': this.$store.state.token}})
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => {
 
+      })
     },
     download() {
       axios.get(this.$serverBaseUrl + this.file.Fileurl, {

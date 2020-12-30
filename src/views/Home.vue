@@ -47,7 +47,7 @@
 <script>
 import MainLayout from "@/components/common/MainLayout";
 import HomeProvider from "@/network/request/home";
-import CourseCards from "@/components/courseList/CourseCards";
+import CourseCards from "@/components/common/CourseCards";
 
 export default {
   name: "Home",
