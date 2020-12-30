@@ -24,8 +24,10 @@
 <script>
 export default {
   name: "CourseTitleCard",
-  props: {
-    course: Object,
+  computed: {
+    course() {
+      return this.$store.state.course
+    }
   },
 
 }

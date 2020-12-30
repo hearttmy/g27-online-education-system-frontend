@@ -1,7 +1,6 @@
 <template>
   <el-card>
-    <component :is="toolBarType" :course="course" @changeDeleteMode="changeDeleteMode"
-      @updateCourseInfo="updateCourseInfo"></component>
+    <component :is="toolBarType" @changeDeleteMode="changeDeleteMode"></component>
   </el-card>
 </template>
 
@@ -13,14 +12,7 @@ import HomeworkToolBar from "@/components/course/toolBarItem/HomeworkToolBar";
 
 export default {
   name: "CourseToolBar",
-  props: {
-    course: Object,
-  },
   components: {ChapterToolBar, BulletinToolBar, OutlineToolBar, HomeworkToolBar},
-  data() {
-    return {
-    }
-  },
   computed: {
     toolBarType() {
       return this.$route.name + 'ToolBar'
@@ -30,9 +22,6 @@ export default {
     changeDeleteMode() {
       this.$emit('changeDeleteMode')
     },
-    updateCourseInfo() {
-      this.$emit('updateCourseInfo')
-    }
   }
 }
 </script>

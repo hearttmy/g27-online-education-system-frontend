@@ -1,18 +1,16 @@
 <template>
 <MainLayout :lg="20">
   <div>
-    <CourseTitleCard :course="course"></CourseTitleCard>
+    <CourseTitleCard></CourseTitleCard>
   </div>
   <div>
-    <CourseNavBar :course="course"></CourseNavBar>
+    <CourseNavBar></CourseNavBar>
   </div>
   <div class="tool-bar-wrapper">
-    <CourseToolBar :course="course" @changeDeleteMode="changeDeleteMode"
-      @updateCourseInfo="updateCourseInfo"></CourseToolBar>
+    <CourseToolBar @changeDeleteMode="changeDeleteMode"></CourseToolBar>
   </div>
   <div class="content-wrapper">
-    <router-view :course="course" :deleteMode="deleteMode"
-      @updateCourseInfo="updateCourseInfo"></router-view>
+    <router-view :deleteMode="deleteMode"></router-view>
   </div>
 </MainLayout>
 </template>
@@ -29,27 +27,15 @@ export default {
   components: {CourseToolBar, CourseNavBar, CourseTitleCard, MainLayout},
   data() {
     return {
-      course: {},
       deleteMode: false,
     }
   },
   created() {
-    this.updateCourseInfo()
+    this.$store.dispatch('updateCourseInfo', this.$route.params.course_id)
   },
   methods: {
     changeDeleteMode() {
       this.deleteMode = !this.deleteMode
-    },
-    updateCourseInfo() {
-      CourseProvider.getCourseInfo({
-        params: {
-          'courseID': this.$route.params.course_id
-        }
-      })
-      .then(res => {
-        // console.log(res)
-        this.course = res
-      })
     },
   }
 }

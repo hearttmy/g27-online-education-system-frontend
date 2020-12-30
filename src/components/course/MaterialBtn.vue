@@ -26,10 +26,12 @@ export default {
       tmp['courseID'] = this.courseID
       tmp['chapterID'] = this.chapterID
       tmp['fileName'] = this.file.Filename
+      tmp['fileUrl'] = this.file.Fileurl
       CourseProvider.deleteFile(tmp,
         {headers: {'Authorization': this.$store.state.token}})
       .then(res => {
         console.log(res)
+        this.$store.dispatch('updateCourseInfo', this.$route.params.course_id)
       })
       .catch(err => {
 

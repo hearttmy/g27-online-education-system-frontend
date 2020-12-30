@@ -12,7 +12,7 @@
 
 <script>
 import UserCourseToolBar from "@/components/user/UserCourseToolBar";
-import CourseLongCards from "@/components/courseList/CourseLongCards";
+import CourseLongCards from "@/components/common/CourseLongCards";
 
 export default {
   name: "UserCourse",
@@ -27,7 +27,6 @@ export default {
 
 <style scoped>
 .tool-bar {
-
   margin-left: 20px;
 }
 .course-list-wrapper {

@@ -24,12 +24,16 @@ export default {
   name: "Chapter",
   components: {MaterialBtn},
   props: {
-    course: Object,
     deleteMode: Boolean,
   },
   data() {
     return {
       activeNames: [],
+    }
+  },
+  computed: {
+    course() {
+      return this.$store.state.course
     }
   },
   methods: {
@@ -45,7 +49,7 @@ export default {
         {headers: {'Authorization': this.$store.state.token}})
       .then(res => {
         console.log(res)
-        this.$emit('updateCourseInfo')
+        this.$store.dispatch('updateCourseInfo', this.$route.params.course_id)
       })
       .catch(err => {
 

@@ -5,14 +5,16 @@
     <el-button type="danger" @click="changeDeleteMode">删除模式</el-button>
 
     <el-dialog title="添加章节" :visible.sync="addChapterDialog">
-      <el-form :model="addChapterForm">
+      <el-form :model="addChapterForm"
+               :rules="addChapterFormRules"
+               ref="addChapterForm">
         <el-form-item label="章节名称" :label-width="'120px'">
           <el-input v-model="addChapterForm.chapterName" style="width: 300px"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="addChapterDialog = false">取 消</el-button>
-        <el-button type="primary" @click="addChapter">确 定</el-button>
+        <el-button type="primary" @click="addChapter('addChapterForm')">确 定</el-button>
       </div>
     </el-dialog>
 
@@ -31,7 +33,7 @@
 
         <el-form-item label="上传文件" :label-width="'120px'">
           <el-upload :action="$serverApiUrl + '/course/addFile'"
-                     :headers="tokenHeader"
+                     :headers="tokenHeader "
                      :data="addFileForm" :on-success="handleFileSuccess"
                      ref="upload" :auto-upload="false" :on-change="handleFileChange">
             <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
@@ -56,15 +58,17 @@ import CourseProvider from "@/network/request/course";
 
 export default {
   name: "ChapterToolBar",
-  props: {
-    course: Object,
-  },
   data() {
     return {
       tokenHeader: {'Authorization': this.$store.state.token},
       addChapterDialog: false,
       addChapterForm: {
         chapterName: '',
+      },
+      addChapterFormRules: {
+        chapterName: [
+          {required: true, min: 1, message: '章节名不得为空', trigger: 'change'}
+        ],
       },
       addFileDialog: false,
       addFileForm: {
@@ -75,24 +79,46 @@ export default {
       myFileList: [],
     }
   },
+  computed: {
+    course() {
+      return this.$store.state.course
+    }
+  },
   created() {
     this.addFileForm.courseID = this.$route.params.course_id
   },
   methods: {
-    addChapter() {
-      const tmp = {}
-      tmp['ChapterName'] = this.addChapterForm.chapterName
-      tmp['courseID'] = this.$route.params.course_id
-      CourseProvider.addChapter(tmp,
-        {headers: {'Authorization': this.$store.state.token}})
-      .then(res => {
-        console.log(res)
-        this.$emit('updateCourseInfo')
-      })
-      .catch(err => {
+    addChapter(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          const tmp = {}
+          tmp['ChapterName'] = this.addChapterForm.chapterName
+          tmp['courseID'] = this.$route.params.course_id
+          CourseProvider.addChapter(tmp,
+            {headers: {'Authorization': this.$store.state.token}})
+            .then(res => {
+              // console.log(res)
+              if (res.state) {
+                this.$message({
+                  showClose: true,
+                  message: '添加成功',
+                  type: 'success'
+                });
+                this.$store.dispatch('updateCourseInfo', this.$route.params.course_id)
+              } else {
+                this.$message({
+                  showClose: true,
+                  message: '添加失败',
+                  type: 'warning'
+                });
+              }
+            })
+            .catch(err => {
 
+            })
+          this.addChapterDialog = false
+        }
       })
-      this.addChapterDialog = false
     },
     submitUpload() {
       this.addFileForm.fileName = this.myFileList[0].name
@@ -104,9 +130,10 @@ export default {
         this.$message({
           showClose: true,
           message: '上传成功',
-          type: 'warning'
+          type: 'success'
         });
         this.$refs.upload.clearFiles()
+        this.$store.dispatch('updateCourseInfo', this.$route.params.course_id)
       }
     },
     handleFileChange(file, fileList) {

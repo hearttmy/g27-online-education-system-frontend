@@ -4,7 +4,8 @@
 
 <script>
 export default {
-  name: "ResultList"
+  name: "ResultList",
+
 }
 </script>
 

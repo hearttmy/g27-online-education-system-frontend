@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import config from "@/common/config";
+import CourseProvider from "@/network/request/course";
 
 Vue.use(Vuex)
 
@@ -8,6 +9,7 @@ const store = new Vuex.Store({
   state: {
     isLogin: false,
     user: {},
+    course: {},
     token: '',
     avatarUrl: "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
   },
@@ -35,6 +37,9 @@ const store = new Vuex.Store({
       state.user = res
       this.commit('setSessionStorage')
     },
+    updateCourse(state, res) {
+      state.course = res
+    },
     setSessionStorage(state) {
       sessionStorage.setItem('state', JSON.stringify(state))
     },
@@ -49,7 +54,15 @@ const store = new Vuex.Store({
     }
   },
   actions: {
-
+    updateCourseInfo(context, courseID) {
+      CourseProvider.getCourseInfo({
+        params: {
+          'courseID': courseID
+        }
+      }).then(res => {
+        context.commit('updateCourse', res)
+      })
+    },
   },
   getters: {
 

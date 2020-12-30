@@ -1,5 +1,5 @@
 <template>
-  <MainLayout>
+  <MainLayout :lg="18">
     <el-row type="flex">
       <UserCard></UserCard>
       <transition name="slide-fade" mode="out-in">

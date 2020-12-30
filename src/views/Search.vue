@@ -4,7 +4,7 @@
       <span>搜索结果</span>
     </div>
 
-    <ResultList :data="result"></ResultList>
+   <CourseLongCards :courses="result"></CourseLongCards>
   </MainLayout>
 </template>
 
@@ -12,10 +12,11 @@
 import MainLayout from "@/components/common/MainLayout";
 import ResultList from "@/components/search/ResultList";
 import SearchProvider from "@/network/request/search";
+import CourseLongCards from "@/components/common/CourseLongCards";
 
 export default {
   name: "Search",
-  components: {ResultList, MainLayout},
+  components: {CourseLongCards, ResultList, MainLayout},
   data () {
     return {
       result: [],
@@ -38,6 +39,7 @@ export default {
       })
       .then(res => {
         console.log(res)
+        this.result = res
       })
       .catch(err => {
 
@@ -53,5 +55,6 @@ export default {
   font-weight: bold;
   border-bottom: 1px solid #ddd;
   padding: 20px;
+  margin-bottom: 20px;
 }
 </style>

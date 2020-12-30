@@ -103,6 +103,13 @@ const routes = [
     ]
   },
   {
+    path: '/courseInfo/:course_id',
+    component: () => import('@/views/CourseInfo'),
+    meta: {
+      title: '课程简介',
+    },
+  },
+  {
     path: '/course/:course_id',
     component: () => import('@/views/Course'),
     children: [
