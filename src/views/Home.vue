@@ -76,7 +76,7 @@ export default {
       })
     },
     navToCourse(courseID) {
-      this.$router.push('/course/'+ courseID + '/content')
+      this.$router.push('/courseInfo/'+ courseID)
     }
   },
 }

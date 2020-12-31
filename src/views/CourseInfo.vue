@@ -13,11 +13,14 @@
         </div>
         <div style="margin-top: 35px">
           <p style="font-weight: bold">授课老师：
-            <span v-for="(item, i) in course.teacher" :key="i">{{item.username}} </span>
+            {{course.teacherID}}
           </p>
         </div>
         <div style="margin-top: 70px">
-          <el-button type="primary" class="courseInfo-button" @click="takeCourse">加入课程</el-button>
+          <el-button type="primary" class="courseInfo-button"
+                     v-if="!isTakeCourse" @click="JoinCourse">加入课程</el-button>
+          <el-button type="success" class="courseInfo-button"
+                     v-else @click="NavToCourse(course.courseID)">已参加，进入课程</el-button>
         </div>
 
       </div>
@@ -30,20 +33,78 @@
 
 <script>
 import MainLayout from "@/components/common/MainLayout";
+import CourseInfoProvider from "@/network/request/courseInfo";
 export default {
   name: "CourseIntro",
   components: {MainLayout},
+  data() {
+    return {
+      isTakeCourse: false,
+    }
+  },
   created() {
     this.$store.dispatch('updateCourseInfo', this.$route.params.course_id)
+    if (!this.$store.state.user.userType) {
+      this.IsTakeCourse()
+    }
+    else {
+      this.isTakeCourse = true
+    }
   },
   computed: {
     course() {
       return this.$store.state.course
-    }
+    },
   },
   methods: {
-    takeCourse() {
+    JoinCourse() {
+      if (!this.$store.state.isLogin) {
+        this.$message({
+          showClose: true,
+          message: '请先登录',
+          type: 'warning',
+        });
+        return
+      }
+      CourseInfoProvider.JoinCourse({
+        params: {courseID: this.course.courseID},
+        headers: {'Authorization': this.$store.state.token}
+      })
+      .then(res => {
+        if (res.state) {
+          this.$message({
+            showClose: true,
+            message: '加入成功',
+            type: 'success',
+          });
+        }
+      })
+      .catch(err => {
 
+      })
+      this.IsTakeCourse()
+      this.$router.go(0)
+    },
+    IsTakeCourse() {
+      CourseInfoProvider.IsSelect({
+        params: {courseID: this.course.courseID},
+        headers: {'Authorization': this.$store.state.token}
+      })
+      .then(res => {
+        console.log(res)
+        if (res.state) {
+          this.isTakeCourse = true
+        }
+        else {
+          this.isTakeCourse = false
+        }
+      })
+      .catch(err => {
+
+      })
+    },
+    NavToCourse(courseID) {
+      this.$router.push('/course/'+ courseID + '/chapter')
     }
   }
 }
@@ -51,9 +112,8 @@ export default {
 
 <style lang="scss" scoped>
 .courseInfo-img-wrapper {
-  width: 510px;
+  width: 48%;
   height: 288px;
-  margin-left: 20px;
   float: left;
   img {
     width: 100%;
@@ -61,7 +121,7 @@ export default {
   }
 }
 .courseInfo-title-wrapper {
-  width: 600px;
+  width: 50%;
   float: right;
   vertical-align: baseline;
 }

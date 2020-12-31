@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="width: 876px;">
     <div class="tool-bar">
       <UserCourseToolBar></UserCourseToolBar>
     </div>

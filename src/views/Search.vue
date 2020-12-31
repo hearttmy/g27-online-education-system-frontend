@@ -4,7 +4,10 @@
       <span>搜索结果</span>
     </div>
 
-   <CourseLongCards :courses="result"></CourseLongCards>
+    <CourseLongCards v-if="result.length" :courses="result"></CourseLongCards>
+    <div v-else style="padding: 20px;">
+      没有结果
+    </div>
   </MainLayout>
 </template>
 

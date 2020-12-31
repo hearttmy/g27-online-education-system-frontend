@@ -8,7 +8,7 @@
       <el-form :model="addChapterForm"
                :rules="addChapterFormRules"
                ref="addChapterForm">
-        <el-form-item label="章节名称" :label-width="'120px'">
+        <el-form-item label="章节名称" :label-width="'120px'" prop="chapterName">
           <el-input v-model="addChapterForm.chapterName" style="width: 300px"></el-input>
         </el-form-item>
       </el-form>
@@ -19,8 +19,10 @@
     </el-dialog>
 
     <el-dialog title="添加学习内容" :visible.sync="addFileDialog">
-      <el-form :model="addFileForm">
-        <el-form-item label="章节名称" :label-width="'120px'">
+      <el-form :model="addFileForm"
+               :rules="addFileFormRules"
+                ref="addFileForm">
+        <el-form-item label="章节名称" :label-width="'120px'" prop="chapterID">
           <el-select v-model="addFileForm.chapterID" placeholder="请选择">
             <el-option
               v-for="(item, i) in course.content"
@@ -38,7 +40,7 @@
                      ref="upload" :auto-upload="false" :on-change="handleFileChange">
             <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
             <el-button style="margin-left: 10px;" size="small"
-                       type="success" @click="submitUpload">上传到服务器</el-button>
+                       type="success" @click="submitUpload('addFileForm')">上传到服务器</el-button>
           </el-upload>
         </el-form-item>
 
@@ -67,7 +69,7 @@ export default {
       },
       addChapterFormRules: {
         chapterName: [
-          {required: true, min: 1, message: '章节名不得为空', trigger: 'change'}
+          {required: true, message: '章节名不得为空', trigger: 'change'}
         ],
       },
       addFileDialog: false,
@@ -75,6 +77,11 @@ export default {
         courseID: '',
         fileName: '',
         chapterID: '',
+      },
+      addFileFormRules: {
+        chapterID: [
+          {required: true, message: '章节名不得为空', trigger: 'change'}
+        ],
       },
       myFileList: [],
     }
@@ -120,9 +127,13 @@ export default {
         }
       })
     },
-    submitUpload() {
-      this.addFileForm.fileName = this.myFileList[0].name
-      this.$refs.upload.submit()
+    submitUpload(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          this.addFileForm.fileName = this.myFileList[0].name
+          this.$refs.upload.submit()
+        }
+      })
     },
     handleFileSuccess(res, file) {
       console.log(res)

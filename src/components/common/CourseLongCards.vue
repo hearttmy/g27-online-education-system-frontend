@@ -1,15 +1,15 @@
 <template>
   <div class="course-wrapper">
-    <el-col :span="span" v-for="(item, index) in courses" style="padding-bottom: 20px" :key="index">
+    <el-col :span="span" v-for="(course, index) in courses" style="padding-bottom: 20px" :key="index">
       <el-card :body-style="'overflow: hidden'" shadow="hover"
-               @click.native="navToCourse(item.courseID)">
+               @click.native="navToCourse(course.courseID)">
         <img class="course-cover" src="~@/assets/img/logo.png">
 
         <div class="course-title">
-          <p style="font-weight: bold;">123{{item.courseName}}</p>
-          <p style="font-size: 15px; color: #999;">开课时间：{{item.DurationTime}}</p>
-          <p style="font-size: 14px; color: #999;">授课老师：{{item.teacherID}}</p>
-          <p style="font-size: 14px; color: #999;">您在本课程的身份：{{item.teacherID}}</p>
+          <p style="font-weight: bold;">123{{course.courseName}}</p>
+          <p style="font-size: 15px; color: #999;">开课时间：{{course.DurationTime}}</p>
+          <p style="font-size: 14px; color: #999;">授课老师：{{course.teacherID}}</p>
+          <p style="font-size: 14px; color: #999;">您在本课程的身份：{{course.teacherID}}</p>
         </div>
       </el-card>
     </el-col>
@@ -21,6 +21,10 @@ export default {
   name: "CourseLongCards",
   props: {
     courses: Array,
+    navTarget: {
+      type: Number,
+      default: 0,
+    },
     span: {
       type: Number,
       default: 24,
@@ -39,7 +43,12 @@ export default {
   },
   methods: {
     navToCourse(courseID) {
-      this.$router.push('/course/'+ courseID + '/chapter')
+      if (this.navTarget) {
+        this.$router.push('/courseInfo/' + courseID)
+      }
+      else {
+        this.$router.push('/course/'+ courseID + '/chapter')
+      }
     }
   },
 }

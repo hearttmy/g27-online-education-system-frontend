@@ -7,7 +7,8 @@
     <CourseNavBar></CourseNavBar>
   </div>
   <div class="tool-bar-wrapper">
-    <CourseToolBar @changeDeleteMode="changeDeleteMode"></CourseToolBar>
+    <CourseToolBar @changeDeleteMode="changeDeleteMode"
+                   v-if="$store.state.user.userType"></CourseToolBar>
   </div>
   <div class="content-wrapper">
     <router-view :deleteMode="deleteMode"></router-view>

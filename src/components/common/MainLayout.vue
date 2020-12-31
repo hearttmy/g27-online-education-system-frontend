@@ -23,11 +23,11 @@ export default {
     },
     lg: {
       type: Number,
-      default: 20
+      default: 18
     },
     xl: {
       type: Number,
-      default: 20
+      default: 18
     }
   }
 };
