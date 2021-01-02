@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <el-card :body-style="'padding: 0px'" shadow="never">
-      <div style="padding: 20px; border-bottom: 1px solid #d8d8d8;">
+  <el-card :body-style="'padding: 0px'">
+    <el-card :body-style="'padding: 0px'" shadow="never" style="border: none">
+      <div class="outline-title-wrapper">
         <i class="el-icon-ice-cream"></i> 课程信息
       </div>
 
@@ -40,15 +40,15 @@
 
     </el-card>
 
-    <el-card :body-style="'padding: 0px'" shadow="never" style="margin-top: 20px">
-      <div style="padding: 20px;border-bottom: 1px solid #d8d8d8;">
+    <el-card :body-style="'padding: 0px'" shadow="never" style="border: none">
+      <div class="outline-title-wrapper">
         <i class="el-icon-ice-cream"></i>课程简介
       </div>
       <div style="padding: 20px">
         程序设计方法学
       </div>
     </el-card>
-  </div>
+  </el-card>
 </template>
 
 <script>
@@ -58,6 +58,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.outline-title-wrapper {
+  padding: 20px;
+  border-bottom: 1px solid #d8d8d8;
+  border-top: 1px solid #d8d8d8;
+}
 .field-wrapper {
   padding: 20px;
   margin-top: 20px;

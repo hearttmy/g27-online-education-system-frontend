@@ -138,12 +138,20 @@ const routes = [
         }
       },
       {
+        path: 'homework/:homework_index/homeworkDetail',
+        name: 'homeworkDetail',
+        component: () => import('@/views/course/HomeworkDetail'),
+        meta: {
+          title: '作业详情',
+        }
+      },
+      {
         path: 'homework',
         name: 'homework',
-        component: () => import('@/views/course/Chapter'),
+        component: () => import('@/views/course/Homework'),
         meta: {
           title: '课程作业',
-        }
+        },
       },
       {
         path: 'group',
@@ -154,11 +162,11 @@ const routes = [
         }
       },
       {
-        path: 'exam',
-        name: 'exam',
+        path: 'score',
+        name: 'score',
         component: () => import('@/views/course/Chapter'),
         meta: {
-          title: '课程测试',
+          title: '课程成绩',
         }
       },
       {

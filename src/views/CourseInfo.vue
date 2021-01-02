@@ -25,18 +25,20 @@
 
       </div>
     </el-card>
-    <el-card style="margin-top: 20px">
+    <div style="margin-top: 20px">
+      <Outline></Outline>
+    </div>
 
-    </el-card>
   </MainLayout>
 </template>
 
 <script>
 import MainLayout from "@/components/common/MainLayout";
 import CourseInfoProvider from "@/network/request/courseInfo";
+import Outline from "@/views/course/Outline";
 export default {
   name: "CourseIntro",
-  components: {MainLayout},
+  components: {Outline, MainLayout},
   data() {
     return {
       isTakeCourse: false,

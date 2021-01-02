@@ -7,11 +7,10 @@
     <CourseNavBar></CourseNavBar>
   </div>
   <div class="tool-bar-wrapper">
-    <CourseToolBar @changeDeleteMode="changeDeleteMode"
-                   v-if="$store.state.user.userType"></CourseToolBar>
+    <CourseToolBar v-if="$store.state.user.userType"></CourseToolBar>
   </div>
   <div class="content-wrapper">
-    <router-view :deleteMode="deleteMode"></router-view>
+    <router-view></router-view>
   </div>
 </MainLayout>
 </template>
@@ -26,19 +25,9 @@ import CourseProvider from "@/network/request/course";
 export default {
   name: "Course",
   components: {CourseToolBar, CourseNavBar, CourseTitleCard, MainLayout},
-  data() {
-    return {
-      deleteMode: false,
-    }
-  },
   created() {
     this.$store.dispatch('updateCourseInfo', this.$route.params.course_id)
   },
-  methods: {
-    changeDeleteMode() {
-      this.deleteMode = !this.deleteMode
-    },
-  }
 }
 </script>
 

@@ -1,6 +1,6 @@
 <template>
   <el-row>
-    <el-button type="primary">添加公告</el-button>
+    <el-button type="primary" @click="addHomeworkDialog = true">修改作业</el-button>
     <DeleteBtn></DeleteBtn>
   </el-row>
 </template>
@@ -8,15 +8,8 @@
 <script>
 import DeleteBtn from "@/components/course/DeleteBtn";
 export default {
-  name: "BulletinToolBar",
-  components: {DeleteBtn},
-  data() {
-    return {
-    }
-  },
-  methods: {
-
-  }
+  name: "HomeworkDetailToolBar",
+  components: {DeleteBtn}
 }
 </script>
 

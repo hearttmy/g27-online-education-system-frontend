@@ -2,7 +2,7 @@
   <el-row>
     <el-button type="primary" @click="addChapterDialog = true">添加章节</el-button>
     <el-button type="primary" @click="addFileDialog = true">新增学习活动</el-button>
-    <el-button type="danger" @click="changeDeleteMode">删除模式</el-button>
+    <DeleteBtn></DeleteBtn>
 
     <el-dialog title="添加章节" :visible.sync="addChapterDialog">
       <el-form :model="addChapterForm"
@@ -57,9 +57,11 @@
 
 <script>
 import CourseProvider from "@/network/request/course";
+import DeleteBtn from "@/components/course/DeleteBtn";
 
 export default {
   name: "ChapterToolBar",
+  components: {DeleteBtn},
   data() {
     return {
       tokenHeader: {'Authorization': this.$store.state.token},
@@ -150,9 +152,6 @@ export default {
     handleFileChange(file, fileList) {
       this.myFileList = fileList
     },
-    changeDeleteMode() {
-      this.$emit('changeDeleteMode')
-    }
   }
 }
 </script>

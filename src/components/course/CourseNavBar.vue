@@ -16,8 +16,8 @@
       <el-menu-item :index="'/course/' + course_id + '/group'">
         <i class="el-icon-user"></i>分组学习
       </el-menu-item>
-      <el-menu-item :index="'/course/' + course_id + '/exam'">
-        <i class="el-icon-tickets"></i>测试
+      <el-menu-item :index="'/course/' + course_id + '/score'">
+        <i class="el-icon-tickets"></i>成绩
       </el-menu-item>
       <el-menu-item style="border-right: none" :index="'/course/' + course_id + '/forum'">
         <i class="el-icon-chat-round"></i>讨论

@@ -4,12 +4,12 @@
       <el-collapse v-model="activeNames" @change="handleChange">
         <el-collapse-item v-for="(item, i) in course.content" :key="i" :name="i">
           <template slot="title">
-            {{item.ChapterName}}
-            <el-button style="margin-left: 20px" size="mini" v-if="deleteMode"
+            <span style="font-size: 18px;font-weight: bold">{{item.ChapterName}}</span>
+            <el-button style="margin-left: 20px" size="mini" v-if="$store.state.deleteMode"
                        @click="deleteChapter(item._id)">删除章节</el-button>
           </template>
           <MaterialBtn v-for="(file, i) in item.part" :key="i"
-                       :file="file" :deleteMode="deleteMode" :courseID="course.courseID"
+                       :file="file" :courseID="course.courseID"
                         :chapterID="item._id"></MaterialBtn>
         </el-collapse-item>
       </el-collapse>
@@ -23,9 +23,6 @@ import CourseProvider from "@/network/request/course";
 export default {
   name: "Chapter",
   components: {MaterialBtn},
-  props: {
-    deleteMode: Boolean,
-  },
   data() {
     return {
       activeNames: [],

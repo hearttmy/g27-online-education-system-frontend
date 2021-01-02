@@ -101,7 +101,10 @@ export default {
     };
 
     const validateCheckPassword = (rule, value, callback) => {
-      if (value !== this.registerData.password) {
+      if (value === '') {
+        callback(new Error('请输入确认密码'));
+      }
+      else if (value !== this.registerData.password) {
         callback(new Error('两次输入的密码不一致'));
       } else {
         callback();
@@ -119,6 +122,7 @@ export default {
     return {
       registerData: {
         id: '',
+        realName: '',
         username: '',
         email: '',
         password: '',
@@ -127,9 +131,12 @@ export default {
       },
       registerDataRules: {
         id: [{ validator: validateId, trigger: 'change' }],
-        realName: [{validator: validateRealName, trigger: 'change'}],
+        realName: [{ validator: validateRealName, trigger: 'change'}],
         username: [{ validator: validateUsername, trigger: 'change' }],
-        email: [],
+        email: [
+          { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+          { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
+        ],
         password: [{ validator: validatePassword, trigger: 'change' }],
         checkPassword: [{validator: validateCheckPassword, trigger: 'change'}],
         userType: [{ validator: validateUserType, trigger: 'change' }],

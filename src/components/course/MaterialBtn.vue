@@ -4,7 +4,7 @@
     <el-link :href="$serverBaseUrl + file.Fileurl" target="_blank"
              style="margin: 0 10px">{{file.Filename}}</el-link>
     <el-button size="mini" @click="download">下载文件</el-button>
-    <el-button v-if="deleteMode"  size="mini" type="danger" @click="deleteFile">删除文件</el-button>
+    <el-button v-if="$store.state.deleteMode"  size="mini" type="danger" @click="deleteFile">删除文件</el-button>
   </div>
 </template>
 
@@ -18,7 +18,6 @@ export default {
     file: Object,
     courseID: String,
     chapterID: String,
-    deleteMode: Boolean,
   },
   methods: {
     deleteFile() {
