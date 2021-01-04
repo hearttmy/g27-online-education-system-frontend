@@ -9,35 +9,44 @@
         <div class="field">
           <span class="field-name">课程名称</span>
           <div class="field-value">
-            <span>程序设计方法学</span>
+            <span>{{ $store.state.course.courseName }}</span>
           </div>
         </div>
         <div class="field">
-          <span class="field-name">课程名称</span>
+          <span class="field-name">开课院系</span>
           <div class="field-value">
-            <span>程序设计方法学</span>
+            <span>{{ $store.state.course.faculty}}</span>
           </div>
         </div>
         <div class="field">
-          <span class="field-name">课程名称</span>
+          <span class="field-name">课程分类</span>
           <div class="field-value">
-            <span>程序设计方法学</span>
+            <span>{{ $store.state.course.courseType}}</span>
           </div>
         </div>
-        <div class="field">
-          <span class="field-name">课程名称</span>
-          <div class="field-value">
-            <span>程序设计方法学</span>
-          </div>
-        </div>
-        <div class="field">
-          <span class="field-name">课程名称</span>
-          <div class="field-value">
-            <span>程序设计方法学</span>
-          </div>
-        </div>
-      </div>
 
+        <div class="field">
+          <span class="field-name">课程学期</span>
+          <div class="field-value">
+            <span>{{ $store.state.course.DurationTime}}</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <span class="field-name">开课时间</span>
+          <div class="field-value">
+            <span>{{ getTime($store.state.course.created)}}</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <span class="field-name">授课教师</span>
+          <div class="field-value">
+            <span>{{ $store.state.course.teacher[0].username }}</span>
+          </div>
+        </div>
+
+      </div>
     </el-card>
 
     <el-card :body-style="'padding: 0px'" shadow="never" style="border: none">
@@ -45,15 +54,21 @@
         <i class="el-icon-ice-cream"></i>课程简介
       </div>
       <div style="padding: 20px">
-        程序设计方法学
+        {{ $store.state.course.information }}
       </div>
     </el-card>
   </el-card>
 </template>
 
 <script>
+import moment from 'moment'
 export default {
   name: "Outline",
+  methods: {
+    getTime(time) {
+      return moment(time).format('yyyy-MM-DD')
+    }
+  },
 }
 </script>
 

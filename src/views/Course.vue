@@ -7,7 +7,7 @@
     <CourseNavBar></CourseNavBar>
   </div>
   <div class="tool-bar-wrapper">
-    <CourseToolBar v-if="$store.state.user.userType"></CourseToolBar>
+    <CourseToolBar v-if="$store.state.isCourseTch"></CourseToolBar>
   </div>
   <div class="content-wrapper">
     <router-view></router-view>

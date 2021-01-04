@@ -6,7 +6,7 @@
 
       <el-form-item label="验证邮箱：" prop="email">
         <el-input v-model="resetData.email"></el-input>
-        <el-button type="primary">发送验证码</el-button>
+<!--        <el-button type="primary">发送验证码</el-button>-->
       </el-form-item>
 
       <el-form-item label="新密码：" prop="password">

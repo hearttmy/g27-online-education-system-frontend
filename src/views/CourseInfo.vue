@@ -18,9 +18,11 @@
         </div>
         <div style="margin-top: 70px">
           <el-button type="primary" class="courseInfo-button"
-                     v-if="!isTakeCourse" @click="JoinCourse">加入课程</el-button>
+                     v-if="!isTakeCourse" @click="JoinCourse"
+                     key="takeCourse">加入课程</el-button>
           <el-button type="success" class="courseInfo-button"
-                     v-else @click="NavToCourse(course.courseID)">已参加，进入课程</el-button>
+                     v-else @click="NavToCourse(course.courseID)"
+                     key="enterCourse">已参加，进入课程</el-button>
         </div>
 
       </div>
@@ -37,20 +39,23 @@ import MainLayout from "@/components/common/MainLayout";
 import CourseInfoProvider from "@/network/request/courseInfo";
 import Outline from "@/views/course/Outline";
 export default {
-  name: "CourseIntro",
+  name: "CourseInfo",
   components: {Outline, MainLayout},
   data() {
     return {
       isTakeCourse: false,
     }
   },
-  created() {
-    this.$store.dispatch('updateCourseInfo', this.$route.params.course_id)
+  async created() {
+    await this.$store.dispatch('updateCourseInfo', this.$route.params.course_id)
     if (!this.$store.state.user.userType) {
       this.IsTakeCourse()
     }
-    else {
+    else if (this.$store.state.isCourseTch) {
       this.isTakeCourse = true
+    }
+    else {
+      this.isTakeCourse = false
     }
   },
   computed: {
@@ -68,6 +73,15 @@ export default {
         });
         return
       }
+      if (!this.$store.state.isCourseTch && this.$store.state.user.userType === 1) {
+        this.$message({
+          showClose: true,
+          message: '教师无法加入非执教课程',
+          type: 'warning',
+        })
+        return
+      }
+
       CourseInfoProvider.JoinCourse({
         params: {courseID: this.course.courseID},
         headers: {'Authorization': this.$store.state.token}
@@ -85,25 +99,22 @@ export default {
 
       })
       this.IsTakeCourse()
-      this.$router.go(0)
     },
-    IsTakeCourse() {
-      CourseInfoProvider.IsSelect({
-        params: {courseID: this.course.courseID},
-        headers: {'Authorization': this.$store.state.token}
-      })
-      .then(res => {
-        console.log(res)
-        if (res.state) {
-          this.isTakeCourse = true
-        }
-        else {
-          this.isTakeCourse = false
-        }
-      })
-      .catch(err => {
 
-      })
+    IsTakeCourse() {
+      if (this.$store.state.isLogin) {
+        CourseInfoProvider.IsSelect({
+          params: {courseID: this.course.courseID},
+          headers: {'Authorization': this.$store.state.token}
+        }).then(res => {
+          if (res.state) {
+            this.isTakeCourse = true
+          }
+          else {
+            this.isTakeCourse = false
+          }
+        })
+      }
     },
     NavToCourse(courseID) {
       this.$router.push('/course/'+ courseID + '/chapter')

@@ -11,6 +11,7 @@ const store = new Vuex.Store({
     user: {},
     course: {},
     deleteMode: false,
+    isCourseTch: false,
     token: '',
     avatarUrl: "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
   },
@@ -41,10 +42,12 @@ const store = new Vuex.Store({
     updateCourse(state, res) {
       state.course = res
     },
+    updateCourseTch(state, res) {
+      state.isCourseTch = res
+    },
     changeDeleteMode(state) {
       state.deleteMode = !state.deleteMode
     },
-
 
     setSessionStorage(state) {
       sessionStorage.setItem('state', JSON.stringify(state))
@@ -60,14 +63,24 @@ const store = new Vuex.Store({
     }
   },
   actions: {
-    updateCourseInfo(context, courseID) {
-      CourseProvider.getCourseInfo({
-        params: {
-          'courseID': courseID
-        }
+    async updateCourseInfo(context, courseID) {
+      await CourseProvider.getCourseInfo({
+        params: {'courseID': courseID}
       }).then(res => {
         context.commit('updateCourse', res)
       })
+
+      if (context.state.isLogin && context.state.user.userType === 1) {
+        await CourseProvider.isTeacher({
+          headers: {'Authorization': context.state.token},
+          params: {'courseID': courseID},
+        }).then(res => {
+          context.commit('updateCourseTch', res.state)
+        })
+      }
+      else {
+        context.commit('updateCourseTch', false)
+      }
     },
   },
   getters: {

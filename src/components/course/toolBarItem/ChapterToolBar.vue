@@ -122,9 +122,6 @@ export default {
                 });
               }
             })
-            .catch(err => {
-
-            })
           this.addChapterDialog = false
         }
       })

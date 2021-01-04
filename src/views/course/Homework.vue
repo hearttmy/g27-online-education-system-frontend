@@ -12,9 +12,10 @@
       <el-table-column prop="type" label="作业形式">
       </el-table-column>
 
-      <el-table-column prop="state" label="状态">
+      <el-table-column prop="state" label="提交状态" v-if="$store.state.isCourseTch">
       </el-table-column>
-      <el-table-column prop="score" label="成绩">
+
+      <el-table-column prop="score" label="成绩" v-else>
       </el-table-column>
 
       <el-table-column label="操作">
@@ -25,7 +26,7 @@
       </el-table-column>
     </el-table>
 
-    <div v-else>暂无作业</div>
+    <div v-else style="margin-top: 20px">暂无作业</div>
   </div>
 </template>
 
@@ -38,14 +39,6 @@ export default {
   data() {
     return {
       hwData: [
-        {
-          hwName: 'tmy',
-          beginDate: '2020/4/16',
-          deadline: '2020/4/16',
-          type: '分组作业',
-          state: '未交',
-          score: '0',
-        }
       ],
     }
   },
@@ -65,7 +58,6 @@ export default {
       }
     })
     .then(res => {
-      console.log(res)
       if (res.state) {
         this.hwData = res.HW
       }

@@ -12,11 +12,11 @@
       <el-dialog title="添加课程" :visible.sync="addCourseDialog">
         <el-form :model="addCourseForm">
           <el-form-item label="课程名称" :label-width="'120px'">
-            <el-input v-model="addCourseForm.coursename" style="width: 300px"></el-input>
+            <el-input v-model="addCourseForm.courseName" style="width: 300px"></el-input>
           </el-form-item>
 
           <el-form-item label="课程分类" :label-width="'120px'">
-            <el-select v-model="addCourseForm.coursetype" placeholder="请选择">
+            <el-select v-model="addCourseForm.courseType" placeholder="请选择">
               <el-option
                 v-for="(item, i) in courseIndex"
                 :key="i"
@@ -24,6 +24,10 @@
                 :value="item"
               ></el-option>
             </el-select>
+          </el-form-item>
+
+          <el-form-item label="所属院系" :label-width="'120px'">
+            <el-input v-model="addCourseForm.faculty" style="width: 300px"></el-input>
           </el-form-item>
 
           <el-form-item label="课程持续时间" :label-width="'120px'">
@@ -70,11 +74,12 @@ export default {
       courseYear: [],
       courseSeason: ['春夏', '春', '夏', '秋冬', '秋', '冬'],
       addCourseForm: {
-        coursename: '',
+        courseName: '',
         Year: '',
         Season: '',
+        faculty: '',
         DurationTime: '',
-        coursetype: '',
+        courseType: '',
       },
     }
   },
@@ -102,9 +107,6 @@ export default {
             type: 'success',
           });
         }
-      })
-      .catch(err => {
-
       })
       this.addCourseDialog = false
     },

@@ -31,6 +31,46 @@ const CourseProvider  = {
       .then(res => res.data)
       .catch(err => err)
   },
+  isTeacher: (config) => {
+    return http.get('/course/isTeacher', config)
+      .then(res => res.data)
+      .catch(err => err)
+  },
+  mySubmit: (config) => {
+    return http.get('/course/MySubmit', config)
+      .then(res => res.data)
+      .catch(err => err)
+  },
+  getSubmit: (config) => {
+    return http.get('/course/getSubmit', config)
+      .then(res => res.data)
+      .catch(err => err)
+  },
+  deleteSubmitFile: (payload, config) => {
+    return http.post('/course/delSubmitHW', payload, config)
+      .then(res => res.data)
+      .catch(err => err)
+  },
+  addBulletins: (payload) => {
+    return http.post('/course/addBulletins', payload)
+      .then(res => res.data)
+      .catch(err => err)
+  },
+  getBulletins: (payload) => {
+    return http.post('/course/getBulletins', payload)
+      .then(res => res.data)
+      .catch(err => err)
+  },
+  delBulletins: (payload) => {
+    return http.post('/course/delBulletins', payload)
+      .then(res => res.data)
+      .catch(err => err)
+  },
+  editInfo: (payload) => {
+    return http.post('/course/changeInfo', payload)
+      .then(res => res.data)
+      .catch(err => err)
+  },
 }
 
 export default CourseProvider
