@@ -12,10 +12,10 @@
       <el-table-column prop="type" label="作业形式">
       </el-table-column>
 
-      <el-table-column prop="state" label="提交状态" v-if="$store.state.isCourseTch">
+      <el-table-column prop="state" label="状态">
       </el-table-column>
 
-      <el-table-column prop="score" label="成绩" v-else>
+      <el-table-column prop="score" label="成绩" v-if="!$store.state.isCourseTch">
       </el-table-column>
 
       <el-table-column label="操作">

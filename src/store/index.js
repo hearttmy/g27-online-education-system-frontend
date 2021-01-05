@@ -12,6 +12,7 @@ const store = new Vuex.Store({
     course: {},
     deleteMode: false,
     isCourseTch: false,
+    isCourseGet: false,
     token: '',
     avatarUrl: "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
   },
@@ -44,6 +45,7 @@ const store = new Vuex.Store({
     },
     updateCourseTch(state, res) {
       state.isCourseTch = res
+      state.isCourseGet = true
     },
     changeDeleteMode(state) {
       state.deleteMode = !state.deleteMode
@@ -64,6 +66,7 @@ const store = new Vuex.Store({
   },
   actions: {
     async updateCourseInfo(context, courseID) {
+      context.state.isCourseGet = false
       await CourseProvider.getCourseInfo({
         params: {'courseID': courseID}
       }).then(res => {

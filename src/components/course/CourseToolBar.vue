@@ -10,7 +10,8 @@ import BulletinToolBar from "@/components/course/toolBarItem/BulletinToolBar";
 import OutlineToolBar from "@/components/course/toolBarItem/OutlineToolBar";
 import HomeworkToolBar from "@/components/course/toolBarItem/HomeworkToolBar";
 import HomeworkDetailToolBar from "@/components/course/toolBarItem/HomeworkDetailToolBar";
-
+import ForumToolBar from "@/components/course/toolBarItem/ForumToolBar";
+import ForumDetailToolBar from "@/components/course/toolBarItem/ForumDetailToolBar";
 export default {
   name: "CourseToolBar",
   components: {
@@ -19,6 +20,8 @@ export default {
     OutlineToolBar,
     HomeworkToolBar,
     HomeworkDetailToolBar,
+    ForumToolBar,
+    ForumDetailToolBar,
   },
   computed: {
     toolBarType() {

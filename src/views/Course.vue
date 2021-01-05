@@ -10,7 +10,7 @@
     <CourseToolBar v-if="$store.state.isCourseTch"></CourseToolBar>
   </div>
   <div class="content-wrapper">
-    <router-view></router-view>
+    <router-view v-if="$store.state.isCourseGet"></router-view>
   </div>
 </MainLayout>
 </template>
@@ -20,7 +20,6 @@ import MainLayout from "@/components/common/MainLayout";
 import CourseTitleCard from "@/components/course/CourseTitleCard";
 import CourseNavBar from "@/components/course/CourseNavBar";
 import CourseToolBar from "@/components/course/CourseToolBar";
-import CourseProvider from "@/network/request/course";
 
 export default {
   name: "Course",

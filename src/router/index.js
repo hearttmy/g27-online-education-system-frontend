@@ -170,9 +170,17 @@ const routes = [
         }
       },
       {
+        path: 'forum/:forum_index/forumDetail',
+        name: 'forumDetail',
+        component: () => import('@/views/course/ForumDetail'),
+        meta: {
+          title: '帖子详情',
+        }
+      },
+      {
         path: 'forum',
         name: 'forum',
-        component: () => import('@/views/course/Chapter'),
+        component: () => import('@/views/course/Forum'),
         meta: {
           title: '课程讨论',
         }

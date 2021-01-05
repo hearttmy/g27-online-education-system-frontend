@@ -48,6 +48,7 @@ export default {
   },
   async created() {
     await this.$store.dispatch('updateCourseInfo', this.$route.params.course_id)
+
     if (!this.$store.state.user.userType) {
       this.IsTakeCourse()
     }

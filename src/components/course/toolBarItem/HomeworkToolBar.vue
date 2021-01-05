@@ -103,9 +103,6 @@ export default {
               })
             }
           })
-          .catch(err => {
-
-          })
         }
       })
       this.addHomeworkDialog = false

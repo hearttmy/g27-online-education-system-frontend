@@ -1,7 +1,7 @@
 import http from "@/network/request";
 
 const CourseProvider  = {
-  getCourseInfo: (config) => {
+  getCourseInfo(config) {
     return http.get('/course/CoursebyID', config)
       .then(res => res.data)
       .catch(err => err)
@@ -68,6 +68,21 @@ const CourseProvider  = {
   },
   editInfo: (payload) => {
     return http.post('/course/changeInfo', payload)
+      .then(res => res.data)
+      .catch(err => err)
+  },
+  addPost: (payload, config) => {
+    return http.post('/course/addPost', payload, config)
+      .then(res => res.data)
+      .catch(err => err)
+  },
+  getPost(payload) {
+    return http.post('/course/getPost', payload)
+      .then(res => res.data)
+      .catch(err => err)
+  },
+  getMyPost: (payload, config) => {
+    return http.post('/course/getMyPost', payload, config)
       .then(res => res.data)
       .catch(err => err)
   },
