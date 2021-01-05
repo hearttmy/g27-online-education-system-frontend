@@ -29,45 +29,16 @@
 
       <el-tab-pane label="全部帖子" name="first">
         <div v-if="!allPostData.length">暂无帖子</div>
-        <el-card v-else class="post-wrapper"
-                 :body-style="'overflow: hidden; padding: 10px'"
-                  v-for="(item ,i) in allPostData" :key="i">
+        <ForumCard v-else v-for="item in allPostData" :postData="item">
 
-          <img class="post-cover" :src="$serverImgUrl + item.owner.avatar">
-          <div class="post-title">
-            <p style="font-weight: bold; color: #409EFF; font-size: 24px">{{ item.postTitle }}</p>
-            <div style="font-size: 15px; margin-top: 40px">
-              <i class="el-icon-time"></i>
-              {{getTime(item.created)}}
-              <span style="margin-left: 50px">
-                <i class="el-icon-chat-dot-round"></i>
-                {{ item.numOfReply }}
-              </span>
-            </div>
-          </div>
-        </el-card>
+        </ForumCard>
       </el-tab-pane>
 
       <el-tab-pane label="我的帖子" name="second">
         <div v-if="!myPostData.length">暂无帖子</div>
 
-        <el-card v-else class="post-wrapper"
-                 :body-style="'overflow: hidden; padding: 10px'"
-                 v-for="(item ,i) in myPostData" :key="i">
-
-          <img class="post-cover" :src="$serverImgUrl + item.owner.avatar">
-          <div class="post-title">
-            <p style="font-weight: bold; color: #409EFF; font-size: 24px">{{ item.postTitle }}</p>
-            <div style="font-size: 15px; margin-top: 40px">
-              <i class="el-icon-time"></i>
-              {{getTime(item.created)}}
-              <span style="margin-left: 50px">
-                <i class="el-icon-chat-dot-round"></i>
-                {{ item.numOfReply }}
-              </span>
-            </div>
-          </div>
-        </el-card>
+        <ForumCard v-else v-for="item in myPostData" :postData="item">
+        </ForumCard>
 
       </el-tab-pane>
 
@@ -78,8 +49,10 @@
 <script>
 import CourseProvider from "@/network/request/course";
 import moment from 'moment'
+import ForumCard from "@/components/course/forum/ForumCard";
 export default {
   name: "Forum",
+  components: {ForumCard},
   data() {
     return {
       activeName: 'first',
@@ -140,6 +113,8 @@ export default {
             else if (value.student) {
               value['owner'] = value.student[0]
             }
+            value['avatar'] = value.owner.avatar
+            value['userName'] = value.owner.username
             return value
           })
         }
@@ -160,6 +135,8 @@ export default {
             else if (value.student) {
               value['owner'] = value.student[0]
             }
+            value['avatar'] = value.owner.avatar
+            value['userName'] = value.owner.username
             return value
           })
         }

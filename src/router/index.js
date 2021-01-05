@@ -170,7 +170,7 @@ const routes = [
         }
       },
       {
-        path: 'forum/:forum_index/forumDetail',
+        path: 'forum/:post_id/forumDetail',
         name: 'forumDetail',
         component: () => import('@/views/course/ForumDetail'),
         meta: {

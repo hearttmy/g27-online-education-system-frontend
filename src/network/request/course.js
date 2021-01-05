@@ -86,6 +86,21 @@ const CourseProvider  = {
       .then(res => res.data)
       .catch(err => err)
   },
+  getReply(payload) {
+    return http.post('/course/getReply', payload)
+      .then(res => res.data)
+      .catch(err => err)
+  },
+  addReply(payload, config) {
+    return http.post('/course/addReply', payload, config)
+      .then(res => res.data)
+      .catch(err => err)
+  },
+  delPost(payload) {
+    return http.post('/course/delPost', payload)
+      .then(res => res.data)
+      .catch(err => err)
+  },
 }
 
 export default CourseProvider
