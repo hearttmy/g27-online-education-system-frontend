@@ -16,6 +16,11 @@ const UserProvider = {
       .then(res => res.data)
       .catch(err => err)
   },
+  getMyCourse: (payload, config) => {
+    return http.post('/changePwd', payload, config)
+      .then(res => res.data)
+      .catch(err => err)
+  },
 }
 
 export default UserProvider

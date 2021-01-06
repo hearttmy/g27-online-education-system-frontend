@@ -77,7 +77,6 @@ export default {
         courseID: this.$store.state.course.courseID
       })
       .then(res => {
-        console.log(res)
         this.tableData = res.stuGrade.map(value => {
           value['stuID'] = value.stu[0].id
           value['realName'] = value.stu[0].realName

@@ -1,7 +1,7 @@
 <template>
   <div class="course-wrapper">
-    <el-col :span="span" v-for="(course, index) in courses" style="padding-bottom: 20px" :key="index">
-      <el-card :body-style="'overflow: hidden'" shadow="hover"
+    <el-col :span="span" v-for="(course, index) in courses" style="padding-bottom: 12px" :key="index">
+      <el-card :body-style="'overflow: hidden; padding: 10px;'" shadow="hover"
                @click.native="navToCourse(course.courseID)">
         <img class="course-cover" src="~@/assets/img/logo.png">
 
@@ -9,7 +9,6 @@
           <p style="font-weight: bold;">123{{course.courseName}}</p>
           <p style="font-size: 15px; color: #999;">开课时间：{{course.DurationTime}}</p>
           <p style="font-size: 14px; color: #999;">授课老师：{{course.teacherID}}</p>
-          <p style="font-size: 14px; color: #999;">您在本课程的身份：{{course.teacherID}}</p>
         </div>
       </el-card>
     </el-col>
@@ -62,7 +61,7 @@ export default {
   .course-cover {
     float: left;
     width: 30%;
-    height: 200px;
+    height: 150px;
   }
   .course-title {
     float: left;

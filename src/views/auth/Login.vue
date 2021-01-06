@@ -102,22 +102,17 @@ export default {
                   message: '登录成功',
                   type: 'success',
                 });
-                console.log(res)
                 res.user['userType'] = this.loginData.userType
                 this.$store.commit('login', res)
                 this.$router.push('/')
               }
               else {
-                console.log(res)
                 this.$message({
                   showClose: true,
                   message: '用户名或密码错误',
                   type: 'warning'
                 });
               }
-            })
-            .catch(err => {
-              console.log(err)
             })
             .finally(() => {
               this.submitting = false;

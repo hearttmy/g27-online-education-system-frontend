@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-card :body-style="'padding: 10px'">
-      <el-collapse v-model="activeNames" @change="handleChange">
+      <el-collapse v-model="activeNames">
         <el-collapse-item v-for="(item, i) in course.content" :key="i" :name="i">
           <template slot="title">
             <span style="font-size: 18px;font-weight: bold">{{item.ChapterName}}</span>
@@ -33,10 +33,12 @@ export default {
       return this.$store.state.course
     }
   },
+  created() {
+    for (let i = 0; i < this.$store.state.course.content.length; ++i) {
+      this.activeNames.push(i)
+    }
+  },
   methods: {
-    handleChange() {
-
-    },
     deleteChapter(chapterID) {
       console.log(this.course)
       const tmp = {};

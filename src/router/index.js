@@ -156,7 +156,7 @@ const routes = [
       {
         path: 'group',
         name: 'group',
-        component: () => import('@/views/course/Chapter'),
+        component: () => import('@/views/course/Group'),
         meta: {
           title: '课程分组',
         }

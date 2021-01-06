@@ -1,5 +1,5 @@
 <template>
-  <el-card :body-style="'padding: 0px'">
+  <el-card :body-style="'padding: 0px'" v-if="$store.state.course.teacher">
     <el-card :body-style="'padding: 0px'" shadow="never" style="border: none">
       <div class="outline-title-wrapper">
         <i class="el-icon-ice-cream"></i> 课程信息

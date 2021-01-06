@@ -14,7 +14,7 @@
     </div>
 
     <div class="course-list-wrapper">
-      <CourseLongCards :courses="courses"></CourseLongCards>
+      <CourseLongCards :courses="myCourses"></CourseLongCards>
     </div>
   </div>
 
@@ -23,14 +23,15 @@
 <script>
 import UserCourseToolBar from "@/components/user/UserCourseToolBar";
 import CourseLongCards from "@/components/common/CourseLongCards";
+import UserProvider from "@/network/request/user";
 
 export default {
   name: "UserCourse",
   components: {UserCourseToolBar, CourseLongCards},
   data() {
     return  {
-      courses: [1, 2, 3, 4],
-      pageSize: 6,
+      myCourses: [1, 2, 3, 4],
+      pageSize: 4,
       currentPage: 1,
     }
   },
@@ -46,7 +47,10 @@ export default {
     totalPage() {
       return Math.ceil(this.courses.length / this.pageSize)
     }
-  }
+  },
+  created() {
+    UserProvider.getMyCourse()
+  },
 }
 </script>
 

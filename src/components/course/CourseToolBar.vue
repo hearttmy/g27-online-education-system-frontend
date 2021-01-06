@@ -13,6 +13,8 @@ import HomeworkDetailToolBar from "@/components/course/toolBarItem/HomeworkDetai
 import ForumToolBar from "@/components/course/toolBarItem/ForumToolBar";
 import ForumDetailToolBar from "@/components/course/toolBarItem/ForumDetailToolBar";
 import ScoreToolBar from "@/components/course/toolBarItem/ScoreToolBar";
+import GroupToolBar from "@/components/course/toolBarItem/GroupToolBar";
+
 export default {
   name: "CourseToolBar",
   components: {
@@ -24,6 +26,7 @@ export default {
     ForumToolBar,
     ForumDetailToolBar,
     ScoreToolBar,
+    GroupToolBar,
   },
   computed: {
     toolBarType() {
