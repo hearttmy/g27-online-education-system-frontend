@@ -3,6 +3,16 @@
     <div class="tool-bar">
       <UserCourseToolBar></UserCourseToolBar>
     </div>
+
+    <div style="margin-top: 10px; margin-bottom: 10px">
+      <el-pagination
+        background small style="float: right;"
+        layout="prev, slot, next, jumper" :page-count="totalPage"
+        :current-page.sync="currentPage">
+        <span class="page-span">{{ currentPage }}/{{ totalPage }}</span>
+      </el-pagination>
+    </div>
+
     <div class="course-list-wrapper">
       <CourseLongCards :courses="courses"></CourseLongCards>
     </div>
@@ -20,6 +30,21 @@ export default {
   data() {
     return  {
       courses: [1, 2, 3, 4],
+      pageSize: 6,
+      currentPage: 1,
+    }
+  },
+  computed: {
+    courseListInPage() {
+      if (this.currentPage * 6 <= this.courses.length) {
+        return this.courses.slice((this.currentPage - 1) * 6, this.currentPage * 6)
+      }
+      else {
+        return this.courses.slice((this.currentPage - 1) * 6, this.courses.length)
+      }
+    },
+    totalPage() {
+      return Math.ceil(this.courses.length / this.pageSize)
     }
   }
 }
@@ -32,5 +57,9 @@ export default {
 .course-list-wrapper {
   margin-top: 20px;
   margin-left: 20px;
+}
+
+.page-span {
+  min-width: 0px !important;
 }
 </style>

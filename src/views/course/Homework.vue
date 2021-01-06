@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-table v-if="tableData.length" :data="tableData" style="width: 100%">
-      <el-table-column  label="作业名称" :width="400">
+      <el-table-column  label="作业名称" :width="250">
         <template slot-scope="scope">
           <div style="font-weight: bold; font-size: 18px">{{tableData[scope.$index].hwName}}</div>
           <div>起始时间：{{tableData[scope.$index].beginDate}}</div>
@@ -12,10 +12,28 @@
       <el-table-column prop="type" label="作业形式">
       </el-table-column>
 
-      <el-table-column prop="state" label="状态">
+      <el-table-column label="作业状态">
+        <template slot-scope="scope">
+          {{isPassed(tableData[scope.$index].deadline)}}
+        </template>
       </el-table-column>
 
-      <el-table-column prop="score" label="成绩" v-if="!$store.state.isCourseTch">
+      <el-table-column label="已交人数" v-if="$store.state.isCourseTch">
+        <template slot-scope="scope">
+          {{tableData[scope.$index].NumOfSub}} / {{$store.state.course.students.length}}
+        </template>
+      </el-table-column>
+
+      <el-table-column label="提交状态" v-else>
+        <template slot-scope="scope">
+          {{submitState[scope.$index][0] === 1 ? '已提交' : '未提交'}}
+        </template>
+      </el-table-column>
+
+      <el-table-column label="成绩" v-if="!$store.state.user.userType">
+        <template slot-scope="scope">
+          {{submitState[scope.$index][1] === -1 ? '暂无成绩' : submitState[scope.$index][1]}}
+        </template>
       </el-table-column>
 
       <el-table-column label="操作">
@@ -40,6 +58,8 @@ export default {
     return {
       hwData: [
       ],
+      submitState: [],
+      grade: [],
     }
   },
   computed: {
@@ -62,8 +82,29 @@ export default {
         this.hwData = res.HW
       }
     })
+    if (this.$store.state.user.userType === 0) {
+      CourseProvider.isSubmit({
+        headers: {'Authorization': this.$store.state.token},
+        params: {'courseID': this.$route.params.course_id},
+      }).then(res => {
+        console.log(res)
+        if (res.state) {
+          this.submitState = res.isSubmit
+        }
+      })
+    }
   },
   methods: {
+    isPassed(time) {
+      const tmp = new Date(time).valueOf()
+      const now = new Date().valueOf()
+      if (tmp < now) {
+        return '已截止'
+      }
+      else {
+        return '未截止'
+      }
+    },
     homeworkDetail(rowIndex) {
       this.$router.push('/course/' + this.$route.params.course_id
         + '/homework/' + rowIndex + '/homeworkDetail')

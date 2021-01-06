@@ -41,6 +41,11 @@ const CourseProvider  = {
       .then(res => res.data)
       .catch(err => err)
   },
+  isSubmit: (config) => {
+    return http.get('/course/isSubmit', config)
+      .then(res => res.data)
+      .catch(err => err)
+  },
   getSubmit: (config) => {
     return http.get('/course/getSubmit', config)
       .then(res => res.data)
@@ -98,6 +103,26 @@ const CourseProvider  = {
   },
   delPost(payload) {
     return http.post('/course/delPost', payload)
+      .then(res => res.data)
+      .catch(err => err)
+  },
+  correctHW(payload) {
+    return http.post('/course/setGrade', payload)
+      .then(res => res.data)
+      .catch(err => err)
+  },
+  getGrade(payload, config) {
+    return http.post('/course/getGrade', payload, config)
+      .then(res => res.data)
+      .catch(err => err)
+  },
+  getAllGrade(payload) {
+    return http.post('/course/getallGrade', payload)
+      .then(res => res.data)
+      .catch(err => err)
+  },
+  setExamGrade(payload) {
+    return http.post('/course/SetExamGrade', payload)
       .then(res => res.data)
       .catch(err => err)
   },

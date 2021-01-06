@@ -5,7 +5,7 @@
              style="margin: 0 10px">{{file.fileName}}</el-link>
     <el-button size="mini" @click="download">下载文件</el-button>
     <el-button size="mini" type="danger" @click="deleteFile"
-               v-if="deleteDisabled">删除文件</el-button>
+               v-if="!deleteDisabled && $store.state.deleteMode">删除文件</el-button>
   </div>
 </template>
 
@@ -19,7 +19,7 @@ export default {
     file: Object,
     deleteDisabled: {
       type: Boolean,
-      default: false,
+      default: true,
     }
   },
   methods: {

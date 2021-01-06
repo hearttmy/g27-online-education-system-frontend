@@ -94,12 +94,9 @@ export default {
             message: '加入成功',
             type: 'success',
           });
+          this.IsTakeCourse()
         }
       })
-      .catch(err => {
-
-      })
-      this.IsTakeCourse()
     },
 
     IsTakeCourse() {

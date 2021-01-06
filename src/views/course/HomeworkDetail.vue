@@ -52,6 +52,8 @@
           <div style="border-bottom: 1px solid #d8d8d8; color:#737373;">
             附件名
             <el-button style="margin-left: 20px; margin-bottom: 5px" type="primary" size="mini"
+                       :disabled="overDeadline"
+                       v-if="$store.state.isCourseTch"
                        @click="addFileDialogVisible = true">添加附件</el-button>
           </div>
           <el-dialog title="上传附件" :visible.sync="addFileDialogVisible">
@@ -70,7 +72,7 @@
           </el-dialog>
 
           <div v-for="(item, i) in homework.File" :key="i">
-            <HomeworkFile :file="item" :delete-disabled="$store.state.isCourseTch"></HomeworkFile>
+            <HomeworkFile :file="item" :delete-disabled="!$store.state.isCourseTch"></HomeworkFile>
           </div>
         </div>
 
@@ -83,9 +85,10 @@
       <el-tab-pane label="我的作业" name="third" v-else>
         <div>
           <div v-for="(item, i) in mySubmit" :key="i" style="margin-bottom: 20px">
-            <HomeworkFile :file="item" :delete-disabled="true"></HomeworkFile>
+            <HomeworkFile :file="item" :delete-disabled="overDeadline"></HomeworkFile>
           </div>
-          <el-button type="primary" @click="submitDialogVisible = true">提交作业</el-button>
+          <el-button type="primary" @click="submitDialogVisible = true"
+                     :disabled="overDeadline">提交作业</el-button>
 
           <el-dialog title="上传作业" :visible.sync="submitDialogVisible">
             <el-upload :action="$serverApiUrl + '/course/submitHW'"
@@ -126,6 +129,7 @@ export default {
       tokenHeader: {'Authorization': this.$store.state.token},
       addFileDialogVisible: false,
       submitDialogVisible: false,
+      overDeadline: false,
     }
   },
   created() {
@@ -140,6 +144,16 @@ export default {
         this.getAllSubmit()
       }
     },
+    isPassed(time) {
+      const tmp = new Date(time).valueOf()
+      const now = new Date().valueOf()
+      if (tmp < now) {
+        return 1
+      }
+      else {
+        return 0
+      }
+    },
     getHW() {
       CourseProvider.getHW({
         params: {
@@ -151,6 +165,11 @@ export default {
           this.homework = res.HW[this.$route.params.homework_index]
           this.homework.beginDate = moment(this.homework.beginDate).format('yyyy-MM-DD HH:mm:ss')
           this.homework.deadline = moment(this.homework.deadline).format('yyyy-MM-DD HH:mm:ss')
+          if (this.isPassed(this.homework.deadline)) {
+            this.overDeadline = true
+          } else {
+            this.overDeadline = false
+          }
         }
       })
     },

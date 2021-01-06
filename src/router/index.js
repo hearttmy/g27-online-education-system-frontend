@@ -164,7 +164,7 @@ const routes = [
       {
         path: 'score',
         name: 'score',
-        component: () => import('@/views/course/Chapter'),
+        component: () => import('@/views/course/Score'),
         meta: {
           title: '课程成绩',
         }

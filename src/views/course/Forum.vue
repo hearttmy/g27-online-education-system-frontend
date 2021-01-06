@@ -29,7 +29,7 @@
 
       <el-tab-pane label="全部帖子" name="first">
         <div v-if="!allPostData.length">暂无帖子</div>
-        <ForumCard v-else v-for="item in allPostData" :postData="item">
+        <ForumCard v-else v-for="(item, i) in allPostData" :postData="item" :key="i">
 
         </ForumCard>
       </el-tab-pane>
@@ -37,7 +37,7 @@
       <el-tab-pane label="我的帖子" name="second">
         <div v-if="!myPostData.length">暂无帖子</div>
 
-        <ForumCard v-else v-for="item in myPostData" :postData="item">
+        <ForumCard v-else v-for="(item, i) in myPostData" :postData="item" :key="i">
         </ForumCard>
 
       </el-tab-pane>
