@@ -17,7 +17,7 @@ const UserProvider = {
       .catch(err => err)
   },
   getMyCourse: (payload, config) => {
-    return http.post('/changePwd', payload, config)
+    return http.post('/course/myCourse', payload, config)
       .then(res => res.data)
       .catch(err => err)
   },

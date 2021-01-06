@@ -3,6 +3,7 @@
     <el-button type="primary" @click="groupDialog = true">添加分组</el-button>
     <el-dialog :visible.sync="groupDialog">
       <el-table
+        ref="multipleTable"
         :data="studentList"
         style="width: 100%"
         border
@@ -41,32 +42,67 @@
         <el-button style="margin-top: 10px" type="primary" @click="addGroup">添加分组</el-button>
       </div>
       <div slot="footer">
-        <el-button type="primary" @click="groupDialog = false">确 定</el-button>
+        <el-button @click="groupDialog = false">取 消</el-button>
       </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
+import CourseProvider from "@/network/request/course";
+
 export default {
   name: "GroupToolBar",
   data() {
     return {
       groupDialog: false,
       studentSelection: [],
-      groupName: '第一组',
+      groupName: '',
+      studentList: [],
     }
   },
-  computed: {
-    studentList() {
-      return this.$store.state.course.studentInfo
-    },
-  },
   created() {
+    this.getStuNoGroup()
   },
   methods: {
     addGroup() {
+      CourseProvider.makeGroup({
+        courseID: this.$store.state.course.courseID,
+        groupName: this.groupName,
+        groupMember: this.studentList,
+      }).then(res => {
+        if (res.state) {
+          this.$message({
+            showClose: true,
+            message: '添加分组成功',
+            type: 'success',
+          })
+          this.$refs.multipleTable.clearSelection()
+          this.groupName = ''
+          this.groupDialog = false
+          this.$router.go(0)
+        }
+      })
+    },
+    getStuNoGroup() {
+      CourseProvider.getStuNoGroup({
+        courseID: this.$store.state.course.courseID
+      }).then(res => {
+        this.studentList = res.noGroup.filter(value => {
+          if (value) {
+            return true
+          }
+          else {
+            return false
+          }
+        }).map(value => {
+          const tmp = {}
+          tmp['id'] = value[0].id
+          tmp['realName'] = value[0].realName
+          return tmp
+        })
 
+      })
     },
     handleSelectionChange(val) {
       this.studentSelection = val;

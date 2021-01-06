@@ -14,7 +14,7 @@
     </div>
 
     <div class="course-list-wrapper">
-      <CourseLongCards :courses="myCourses"></CourseLongCards>
+      <CourseLongCards :courses="courses"></CourseLongCards>
     </div>
   </div>
 
@@ -30,7 +30,7 @@ export default {
   components: {UserCourseToolBar, CourseLongCards},
   data() {
     return  {
-      myCourses: [1, 2, 3, 4],
+      courses: [],
       pageSize: 4,
       currentPage: 1,
     }
@@ -49,7 +49,11 @@ export default {
     }
   },
   created() {
-    UserProvider.getMyCourse()
+    UserProvider.getMyCourse({},{
+      headers: {'Authorization': this.$store.state.token},
+    }).then(res => {
+      this.courses = res.info[0].course
+    })
   },
 }
 </script>

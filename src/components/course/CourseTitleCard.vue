@@ -19,7 +19,20 @@
     </div>
     <div class="btn-wrapper">
       <el-button icon="el-icon-user" @click="memberDialogVisible = true">班级成员</el-button>
-      <el-dialog>
+      <el-dialog :visible.sync="memberDialogVisible">
+        <el-table
+          :data="$store.state.course.studentInfo"
+          style="width: 100%"
+          border>
+          <el-table-column prop="realName" label="姓名">
+
+          </el-table-column>
+
+          <el-table-column prop="id" label="学号">
+
+          </el-table-column>
+        </el-table>
+
         <div slot="footer" class="dialog-footer">
           <el-button type="primary" @click="memberDialogVisible = false">确 定</el-button>
         </div>

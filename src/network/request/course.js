@@ -126,6 +126,21 @@ const CourseProvider  = {
       .then(res => res.data)
       .catch(err => err)
   },
+  makeGroup(payload) {
+    return http.post('/course/makeGroup', payload)
+      .then(res => res.data)
+      .catch(err => err)
+  },
+  getGroup(payload) {
+    return http.post('/course/getGroup', payload)
+      .then(res => res.data)
+      .catch(err => err)
+  },
+  getStuNoGroup(payload) {
+    return http.post('/course/stuNoGroup', payload)
+      .then(res => res.data)
+      .catch(err => err)
+  },
 }
 
 export default CourseProvider
