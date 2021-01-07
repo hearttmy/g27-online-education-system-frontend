@@ -41,11 +41,10 @@ export default {
           }
       })
       .then(res => {
-        console.log(res)
-        this.result = res
-      })
-      .catch(err => {
-
+        this.result = res.map(value => {
+          value['teacherName'] = value.teacher[0].realName
+          return value
+        })
       })
     },
   },

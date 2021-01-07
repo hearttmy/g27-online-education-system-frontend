@@ -62,7 +62,10 @@ export default {
   created() {
     HomeProvider.getAllCourse()
     .then(res => {
-      this.courses = res.data
+      this.courses = res.data.map(value => {
+        value['teacherName'] = value.teacher[0].realName
+        return value
+      })
     })
   },
   methods: {

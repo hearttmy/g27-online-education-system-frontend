@@ -58,7 +58,7 @@ export default {
   data() {
     return {
       activeName: 'first',
-      allPostData: ['1'],
+      allPostData: [],
       myPostData: [],
       addPostDialog: false,
       addPostForm: {

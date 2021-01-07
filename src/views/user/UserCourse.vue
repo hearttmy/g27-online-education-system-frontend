@@ -37,11 +37,11 @@ export default {
   },
   computed: {
     courseListInPage() {
-      if (this.currentPage * 6 <= this.courses.length) {
-        return this.courses.slice((this.currentPage - 1) * 6, this.currentPage * 6)
+      if (this.currentPage * this.pageSize <= this.courses.length) {
+        return this.courses.slice((this.currentPage - 1) * this.pageSize, this.currentPage * this.pageSize)
       }
       else {
-        return this.courses.slice((this.currentPage - 1) * 6, this.courses.length)
+        return this.courses.slice((this.currentPage - 1) * this.pageSize, this.courses.length)
       }
     },
     totalPage() {
@@ -52,7 +52,11 @@ export default {
     UserProvider.getMyCourse({},{
       headers: {'Authorization': this.$store.state.token},
     }).then(res => {
-      this.courses = res.info[0].course
+      console.log(res)
+      this.courses = res.info.map(value => {
+        value['teacherName'] = value.teacher[0].realName
+        return value
+      })
     })
   },
 }

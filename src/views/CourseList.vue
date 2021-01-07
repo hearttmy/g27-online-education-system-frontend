@@ -98,7 +98,12 @@ export default {
         }
       })
       .then(res => {
-        this.courses = res
+        if (res.state) {
+          this.courses = res.docs.map(value => {
+            value['teacherName'] = value.teacher[0].realName
+            return value
+          })
+        }
       })
     },
   },
