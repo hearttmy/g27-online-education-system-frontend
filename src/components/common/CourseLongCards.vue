@@ -6,9 +6,9 @@
         <img class="course-cover" src="~@/assets/img/logo.png">
 
         <div class="course-title">
-          <p style="font-weight: bold;">123{{course.courseName}}</p>
+          <p style="font-weight: bold;">{{course.courseName}}</p>
           <p style="font-size: 15px; color: #999;">开课时间：{{course.DurationTime}}</p>
-          <p style="font-size: 14px; color: #999;">授课老师：{{course.teacherID}}</p>
+          <p style="font-size: 14px; color: #999;">授课老师：{{course.teacherName}}</p>
         </div>
       </el-card>
     </el-col>

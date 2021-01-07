@@ -12,6 +12,7 @@ const store = new Vuex.Store({
     course: {},
     deleteMode: false,
     isCourseTch: false,
+    isCourseTA: false,
     isCourseGet: false,
     token: '',
     avatarUrl: "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
@@ -42,10 +43,13 @@ const store = new Vuex.Store({
     },
     updateCourse(state, res) {
       state.course = res
+      state.isCourseGet = true
     },
     updateCourseTch(state, res) {
       state.isCourseTch = res
-      state.isCourseGet = true
+    },
+    updateCourseTA(state, res) {
+      state.isCourseTA = res
     },
     changeDeleteMode(state) {
       state.deleteMode = !state.deleteMode
@@ -61,17 +65,25 @@ const store = new Vuex.Store({
         state.user = tmp.user
         state.token = tmp.token
         state.avatarUrl = tmp.avatarUrl
+        state.isCourseGet = false
+        state.isCourseTch = tmp.isCourseTch
+        state.isCourseTA = tmp.isCourseTA
       }
     }
   },
   actions: {
     async updateCourseInfo(context, courseID) {
-      context.state.isCourseGet = false
       await CourseProvider.getCourseInfo({
         params: {'courseID': courseID}
       }).then(res => {
         context.commit('updateCourse', res)
       })
+
+    },
+    async updateCourseTchInfo(context, courseID) {
+      context.commit('updateCourseTch', false)
+      context.commit('updateCourseTA', false)
+
 
       if (context.state.isLogin && context.state.user.userType === 1) {
         await CourseProvider.isTeacher({
@@ -81,10 +93,22 @@ const store = new Vuex.Store({
           context.commit('updateCourseTch', res.state)
         })
       }
-      else {
-        context.commit('updateCourseTch', false)
+
+      if (context.state.isLogin) {
+        await CourseProvider.isTA({
+          courseID: courseID,
+        }, {
+          headers: {'Authorization': context.state.token},
+        }).then(res => {
+          if (res.state) {
+            context.commit('updateCourseTch', true)
+            context.commit('updateCourseTA', true)
+          }
+        })
       }
-    },
+
+      context.commit('setSessionStorage')
+    }
   },
   getters: {
 

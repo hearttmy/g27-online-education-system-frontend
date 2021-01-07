@@ -62,6 +62,7 @@ export default {
               })
               this.addBulletinDialog = false
             }
+            this.$router.go(0)
           })
         }
       })

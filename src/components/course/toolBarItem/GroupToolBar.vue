@@ -1,6 +1,8 @@
 <template>
   <div>
     <el-button type="primary" @click="groupDialog = true">添加分组</el-button>
+    <DeleteBtn></DeleteBtn>
+
     <el-dialog :visible.sync="groupDialog">
       <el-table
         ref="multipleTable"
@@ -50,9 +52,11 @@
 
 <script>
 import CourseProvider from "@/network/request/course";
+import DeleteBtn from "@/components/course/DeleteBtn";
 
 export default {
   name: "GroupToolBar",
+  components: {DeleteBtn},
   data() {
     return {
       groupDialog: false,

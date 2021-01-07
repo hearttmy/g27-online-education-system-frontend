@@ -21,7 +21,7 @@
 
       <el-table-column label="操作" v-if="$store.state.isCourseTch">
         <template slot-scope="scope">
-          <el-button type="text" size="small" @click="scoreDialog = true">
+          <el-button type="text" size="small" @click="scoreDialog = true" :disabled="$store.state.isCourseTA">
             导入考试成绩
           </el-button>
 

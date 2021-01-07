@@ -47,7 +47,13 @@ export default {
       CourseProvider.deleteChapter(tmp,
         {headers: {'Authorization': this.$store.state.token}})
       .then(res => {
-        console.log(res)
+        if (res.state) {
+          this.$message({
+            showClose: true,
+            message: '删除章节成功',
+            type: 'success'
+          })
+        }
         this.$store.dispatch('updateCourseInfo', this.$route.params.course_id)
       })
       .catch(err => {

@@ -2,14 +2,14 @@
   <el-row>
     <el-button type="primary" @click="openInfoDialog">修改课程简介</el-button>
     <el-button type="primary" @click="ImgDialog = true">修改课程图片</el-button>
-    <el-dialog :visible.sync="ImgDialog" @closed="imgRefresh">
+    <el-dialog :visible.sync="ImgDialog">
       <el-upload :data="{courseID: $store.state.course.courseID}"
                  :action="$serverApiUrl + '/course/changeImg'"
                  :on-success="handleUploadSuccess">
         <el-button type="primary">上传课程图片</el-button>
       </el-upload>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="ImgDialog = false">确 定</el-button>
+        <el-button type="primary" @click="ImgDialog = false">取 消</el-button>
       </div>
     </el-dialog>
 
@@ -61,7 +61,7 @@ export default {
             type: 'success',
           })
           this.infoDialog = false
-          this.$router.go(0)
+          this.$store.dispatch('updateCourseInfo', this.$route.params.course_id)
         }
       })
     },
@@ -71,10 +71,9 @@ export default {
         message: '课程图片上传成功',
         type: 'success'
       })
+      this.ImgDialog = false
+      this.$store.dispatch('updateCourseInfo', this.$route.params.course_id)
     },
-    imgRefresh() {
-      this.$router.go(0)
-    }
   }
 }
 </script>

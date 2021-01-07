@@ -31,6 +31,11 @@ const CourseProvider  = {
       .then(res => res.data)
       .catch(err => err)
   },
+  delHW(payload) {
+    return http.post('/course/delHW', payload)
+      .then(res => res.data)
+      .catch(err => err)
+  },
   isTeacher: (config) => {
     return http.get('/course/isTeacher', config)
       .then(res => res.data)
@@ -138,6 +143,21 @@ const CourseProvider  = {
   },
   getStuNoGroup(payload) {
     return http.post('/course/stuNoGroup', payload)
+      .then(res => res.data)
+      .catch(err => err)
+  },
+  delGroup(payload) {
+    return http.post('/course/delGroup', payload)
+      .then(res => res.data)
+      .catch(err => err)
+  },
+  addTA(payload) {
+    return http.post('/course/addTA', payload)
+      .then(res => res.data)
+      .catch(err => err)
+  },
+  isTA(payload, config) {
+    return http.post('/course/isTa', payload, config)
       .then(res => res.data)
       .catch(err => err)
   },

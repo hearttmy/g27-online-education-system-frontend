@@ -2,7 +2,7 @@
   <el-card :body-style="{ padding: '0px' }" class="user-card" shadow="never">
     <div class="avatar-box">
       <el-avatar :src="$store.state.avatarUrl" :size="80"/>
-      <p>{{$store.state.user.username}}</p>
+      <p>{{$store.state.user.realName}}</p>
       <p>{{$store.state.user.userType === 0 ? '学生':'教师'}}</p>
     </div>
     <div>
@@ -14,10 +14,6 @@
         <el-menu-item index="/user/course">
           <i class="el-icon-menu"></i>
           <span slot="title">我的课程</span>
-        </el-menu-item>
-        <el-menu-item index="/user/score">
-          <i class="el-icon-menu"></i>
-          <span slot="title">成绩</span>
         </el-menu-item>
         <el-menu-item index="/user/setting">
           <i class="el-icon-menu"></i>

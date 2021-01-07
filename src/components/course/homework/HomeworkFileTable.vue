@@ -1,55 +1,74 @@
 <template>
-  <el-table :data="tableData" style="width: 100%">
-    <el-table-column label="学号">
-      <template slot-scope="scope">
-        {{tableData[scope.$index].stu[0].id}}
-      </template>
-    </el-table-column>
+  <div>
+    <el-table :data="tableData" style="width: 100%" v-if="tableData.length && hasStuOrGroup">
+      <el-table-column label="组名" v-if="isGroup">
+        <template slot-scope="scope">
+          {{tableData[scope.$index].group[0].groupName}}
+        </template>
+      </el-table-column>
 
-    <el-table-column label="学生姓名">
-      <template slot-scope="scope">
-        {{tableData[scope.$index].stu[0].realName}}
-      </template>
-    </el-table-column>
+      <el-table-column label="学号" v-else>
+        <template slot-scope="scope">
+          {{tableData[scope.$index].stu[0].id}}
+        </template>
+      </el-table-column>
 
-    <el-table-column label="提交时间">
-      <template slot-scope="scope">
-        {{submitTime(tableData[scope.$index].time)}}
-      </template>
-    </el-table-column>
+      <el-table-column label="小组人数" v-if="isGroup">
+        <template slot-scope="scope">
+          {{tableData[scope.$index].group[0].stuID.length}}
+        </template>
+      </el-table-column>
 
-    <el-table-column label="成绩">
-      <template slot-scope="scope">
-        {{tableData[scope.$index].grade === -1 ? '未批改' : tableData[scope.$index].grade}}
-      </template>
-    </el-table-column>
+      <el-table-column label="学生姓名" v-else>
+        <template slot-scope="scope">
+          {{tableData[scope.$index].stu[0].realName}}
+        </template>
+      </el-table-column>
 
-    <el-table-column label="操作">
-      <template slot-scope="scope">
-        <el-button type="text" size="small" @click="download(scope.$index)">下载</el-button>
-        <el-button type="text" size="small" @click="correctDialog = true">批改</el-button>
+      <el-table-column label="提交时间">
+        <template slot-scope="scope">
+          {{submitTime(tableData[scope.$index].time)}}
+        </template>
+      </el-table-column>
 
-        <el-dialog title="作业批改" :visible.sync="correctDialog">
-          <el-form :model="correctForm"
-                   ref="correctForm" label-width="80px">
-            <el-form-item label="成绩">
-              <el-input v-model.number="correctForm.grade" style="width: 200px"></el-input>
-            </el-form-item>
+      <el-table-column label="成绩">
+        <template slot-scope="scope">
+          {{tableData[scope.$index].grade === -1 ? '未批改' : tableData[scope.$index].grade}}
+        </template>
+      </el-table-column>
 
-            <el-form-item label="评语">
-              <el-input type="textarea" v-model="correctForm.comment" :autosize="{ minRows: 9}"></el-input>
-            </el-form-item>
+      <el-table-column label="操作">
+        <template slot-scope="scope">
+          <el-button type="text" size="small" @click="download(scope.$index)">下载</el-button>
+          <el-button type="text" size="small" @click="correctDialog = true">批改</el-button>
 
-          </el-form>
-          <div slot="footer">
-            <el-button @click="correctDialog = false">取 消</el-button>
-            <el-button type="primary" @click="correct('correctForm', scope.$index)">确 定</el-button>
-          </div>
-        </el-dialog>
+          <el-dialog title="作业批改" :visible.sync="correctDialog">
+            <el-form :model="correctForm"
+                     ref="correctForm" label-width="80px">
+              <el-form-item label="成绩">
+                <el-input v-model.number="correctForm.grade" style="width: 200px"></el-input>
+              </el-form-item>
 
-      </template>
-    </el-table-column>
-  </el-table>
+              <el-form-item label="评语">
+                <el-input type="textarea" v-model="correctForm.comment" :autosize="{ minRows: 9}"></el-input>
+              </el-form-item>
+
+            </el-form>
+            <div slot="footer">
+              <el-button @click="correctDialog = false">取 消</el-button>
+              <el-button type="primary" @click="correct('correctForm', scope.$index)">确 定</el-button>
+            </div>
+          </el-dialog>
+
+        </template>
+      </el-table-column>
+    </el-table>
+
+    <div v-else style="margin-top: 20px">
+      暂无作业提交
+    </div>
+  </div>
+
 </template>
 
 <script>
@@ -61,6 +80,10 @@ export default {
   name: "HomeworkFileTable",
   props: {
     tableData: Array,
+    isGroup: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -74,6 +97,16 @@ export default {
     }
   },
   methods: {
+    hasStuOrGroup() {
+      if (!this.tableData.length) {
+        return false
+      }
+      if (isGroup) {
+        return this.tableData[0].group
+      } else {
+        return this.tableData[0].stu
+      }
+    },
     submitTime(time) {
       return moment(time).format('yyyy-MM-DD HH:mm:ss')
     },

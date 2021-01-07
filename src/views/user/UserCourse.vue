@@ -14,7 +14,7 @@
     </div>
 
     <div class="course-list-wrapper">
-      <CourseLongCards :courses="courses"></CourseLongCards>
+      <CourseLongCards :courses="courseListInPage"></CourseLongCards>
     </div>
   </div>
 

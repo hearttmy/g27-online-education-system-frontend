@@ -26,7 +26,7 @@
     <el-dropdown v-else @command="userCommand">
       <span class="el-dropdown-link">
         <el-avatar :src="$store.state.avatarUrl"></el-avatar>
-        {{user.username}}
+        {{user.realName}}
         <i class="el-icon-arrow-down el-icon--right"></i>
       </span>
 

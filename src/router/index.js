@@ -85,14 +85,6 @@ const routes = [
         },
       },
       {
-        path: 'score',
-        name: 'userScore',
-        component: () => import('@/views/user/UserScore'),
-        meta: {
-          title: '我的成绩'
-        },
-      },
-      {
         path: 'setting',
         name: 'userSetting',
         component: () => import('@/views/user/UserSetting'),

@@ -78,7 +78,8 @@
 
       </el-tab-pane>
       <el-tab-pane label="作业批改" name="second" v-if="$store.state.isCourseTch">
-        <HomeworkFileTable :tableData="allSubmit"></HomeworkFileTable>
+        <HomeworkFileTable :tableData="allSubmit"
+                           :isGroup="isGroup"></HomeworkFileTable>
       </el-tab-pane>
 
 
@@ -130,6 +131,7 @@ export default {
       addFileDialogVisible: false,
       submitDialogVisible: false,
       overDeadline: false,
+      isGroup: false,
     }
   },
   created() {
@@ -180,6 +182,13 @@ export default {
           params: {hwID: this.homework._id,},
         }).then(res => {
           this.allSubmit = res.HW
+          if (this.allSubmit) {
+            if (this.allSubmit[0].stu.length) {
+              this.isGroup = false
+            } else if (this.allSubmit[0].group.length) {
+              this.isGroup = true
+            }
+          }
         })
       }
     },

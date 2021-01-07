@@ -100,9 +100,6 @@ export default {
       .then(res => {
         this.courses = res
       })
-      .catch(err => {
-
-      })
     },
   },
 }

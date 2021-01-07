@@ -18,7 +18,20 @@
       <img :src="$serverImgUrl + course.img">
     </div>
     <div class="btn-wrapper">
-      <el-button icon="el-icon-user" @click="memberDialogVisible = true">班级成员</el-button>
+      <el-button style="margin-right: 5px" icon="el-icon-user" @click="TADialog = true"
+      v-if="!$store.state.isCourseTA && $store.state.isCourseTch">设置助教</el-button>
+
+      <el-dialog :visible.sync="TADialog">
+        <span>助教学号/工号：</span>
+        <el-input style="width: 200px" v-model="TA_ID"></el-input>
+
+        <div slot="footer">
+          <el-button type="primary" @click="addTA()">确 定</el-button>
+        </div>
+      </el-dialog>
+
+
+      <el-button icon="el-icon-user" @click="memberDialogVisible = true">班级学生</el-button>
       <el-dialog :visible.sync="memberDialogVisible">
         <el-table
           :data="$store.state.course.studentInfo"
@@ -33,7 +46,7 @@
           </el-table-column>
         </el-table>
 
-        <div slot="footer" class="dialog-footer">
+        <div slot="footer">
           <el-button type="primary" @click="memberDialogVisible = false">确 定</el-button>
         </div>
       </el-dialog>
@@ -42,11 +55,15 @@
 </template>
 
 <script>
+import CourseProvider from "@/network/request/course";
+
 export default {
   name: "CourseTitleCard",
   data() {
     return {
       memberDialogVisible: false,
+      TADialog: false,
+      TA_ID: '',
     }
   },
   computed: {
@@ -55,6 +72,27 @@ export default {
     }
   },
   methods: {
+    addTA() {
+      CourseProvider.addTA({
+        courseID: this.$route.params.course_id,
+        TA_ID: this.TA_ID,
+      }).then(res => {
+        if (res.state) {
+          this.$message({
+            showClose: true,
+            message: '设置助教成功',
+            type: 'success'
+          })
+          this.TADialog = false
+        } else {
+          this.$message({
+            showClose: true,
+            message: '学号或工号不存在',
+            type: 'warning'
+          })
+        }
+      })
+    }
   }
 }
 </script>

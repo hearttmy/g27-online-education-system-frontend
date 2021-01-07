@@ -30,7 +30,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="成绩" v-if="!$store.state.user.userType">
+      <el-table-column label="成绩" v-if="!$store.state.isCourseTch">
         <template slot-scope="scope">
           {{submitState[scope.$index][1] === -1 ? '暂无成绩' : submitState[scope.$index][1]}}
         </template>
@@ -72,29 +72,31 @@ export default {
     }
   },
   created() {
-    CourseProvider.getHW({
-      params: {
-        courseID: this.$route.params.course_id,
-      }
-    })
-    .then(res => {
-      if (res.state) {
-        this.hwData = res.HW
-      }
-    })
-    if (this.$store.state.user.userType === 0) {
-      CourseProvider.isSubmit({
-        headers: {'Authorization': this.$store.state.token},
-        params: {'courseID': this.$route.params.course_id},
-      }).then(res => {
-        console.log(res)
-        if (res.state) {
-          this.submitState = res.isSubmit
-        }
-      })
-    }
+    this.getData()
   },
   methods: {
+    getData() {
+      CourseProvider.getHW({
+        params: {
+          courseID: this.$route.params.course_id,
+        }
+      })
+        .then(res => {
+          if (res.state) {
+            this.hwData = res.HW
+          }
+        })
+      if (!this.$store.state.isCourseTch) {
+        CourseProvider.isSubmit({
+          headers: {'Authorization': this.$store.state.token},
+          params: {'courseID': this.$route.params.course_id},
+        }).then(res => {
+          if (res.state) {
+            this.submitState = res.isSubmit
+          }
+        })
+      }
+    },
     isPassed(time) {
       const tmp = new Date(time).valueOf()
       const now = new Date().valueOf()
@@ -110,8 +112,18 @@ export default {
         + '/homework/' + rowIndex + '/homeworkDetail')
     },
     homeworkDelete(rowIndex) {
-      this.$router.push('/course/' + this.$route.params.course_id
-        + '/homework/' + rowIndex + '/homeworkDetail')
+      CourseProvider.delHW({
+        hwID: this.hwData[rowIndex]._id
+      }).then(res => {
+        if (res.state) {
+          this.$message({
+            showClose: true,
+            message: '删除作业成功',
+            type: 'success'
+          })
+          this.getData()
+        }
+      })
     }
   }
 }

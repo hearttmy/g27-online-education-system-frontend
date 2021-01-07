@@ -84,7 +84,7 @@ export default {
         password: [{ validator: validatePassword, trigger: 'change' }],
         userType: [{ validator: validateUserType, trigger: 'change' }]
       },
-      options: [{ value: 0, label: '学生' }, { value: 1, label: '教师' }, {value: 2, label: '助教'}],
+      options: [{ value: 0, label: '学生' }, { value: 1, label: '教师' }],
 
       submitting: false
     };

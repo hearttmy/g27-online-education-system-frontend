@@ -6,7 +6,8 @@
           <template slot="title">
             <span style="font-size: 18px;font-weight: bold">{{item.groupName}}</span>
             <el-button style="margin-left: 20px" size="mini" v-if="$store.state.deleteMode"
-                       @click="">删除分组</el-button>
+                       type="danger"
+                       @click="deleteGroup(i, $event)">删除分组</el-button>
           </template>
 
           <div>
@@ -39,11 +40,8 @@ export default {
       groupData: [],
     }
   },
-  async created() {
-    await this.getGroup()
-    for (let i = 0; i < this.groupData.length; ++i) {
-      this.activeNames.push(i)
-    }
+  created() {
+    this.getGroup()
   },
   methods: {
     getGroup() {
@@ -51,6 +49,22 @@ export default {
         courseID: this.$store.state.course.courseID
       }).then(res => {
         this.groupData = res.Group
+      })
+    },
+    deleteGroup(index, event) {
+      console.log(event)
+      event.stopPropagation()
+      CourseProvider.delGroup({
+        groupID: this.groupData[index]._id
+      }).then(res => {
+        if (res.state) {
+          this.$message({
+            showClose: true,
+            message: '删除分组成功',
+            type: 'success'
+          })
+          this.getGroup()
+        }
       })
     },
 

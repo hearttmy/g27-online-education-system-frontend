@@ -45,7 +45,8 @@ export default {
     navToPost() {
       this.$router.push('/course/'+ this.$route.params.course_id  +'/forum/' + this.postData._id + '/forumDetail')
     },
-    delPost() {
+    delPost(event) {
+      event.stopPropagation()
       CourseProvider.delPost({
         postID: this.postData._id
       }).then(res => {
@@ -55,6 +56,7 @@ export default {
             message: '帖子删除成功',
             type: 'success'
           })
+          this.$emit('getPost')
         }
       })
     },
