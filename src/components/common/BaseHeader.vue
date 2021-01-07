@@ -14,6 +14,8 @@
   </div>
 
   <div class="login-wrapper">
+    <el-link style="margin-right: 40px" :href="`${publicPath}help.pdf`"
+             download="使用帮助.pdf">使用帮助</el-link>
     <el-link class="login-link" @click="toLogin"
              :underline="false" v-if="!$store.state.isLogin">
       登录
@@ -47,6 +49,7 @@ export default {
   data() {
     return {
       input: '',
+      publicPath: process.env.BASE_URL,
     }
   },
   computed: {
@@ -93,7 +96,7 @@ export default {
 }
 
 .logo-wrapper {
-  margin-left: 250px;
+  margin-left: 200px;
 }
 
 .search-wrapper {
@@ -102,12 +105,12 @@ export default {
 }
 
 .search {
-  width: 400px;
+  width: 300px;
   margin-right: 5px;
 }
 
 .login-wrapper {
-  margin-left: 150px;
+  margin-left: 100px;
   line-height: 80px;
 }
 
