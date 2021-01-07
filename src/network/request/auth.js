@@ -18,11 +18,17 @@ const AuthProvider = {
       .then(res => res.data)
       .catch(err => err)
   },
-  reset: (payload) => {
-    return http.post('/reset', payload)
+  findPwd(payload) {
+    return http.post('/findPwd', payload)
       .then(res => res.data)
       .catch(err => err)
-  }
+  },
+  resetPwd(payload) {
+    return http.post('/resetPwd', payload)
+      .then(res => res.data)
+      .catch(err => err)
+  },
+
 }
 
 export default AuthProvider
