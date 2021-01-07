@@ -106,6 +106,11 @@ const store = new Vuex.Store({
           }
         })
       }
+      if (context.state.user.userType === 2) {
+        context.commit('updateCourseTch', true)
+        context.commit('updateCourseTA', false)
+        return
+      }
 
       context.commit('setSessionStorage')
     }
