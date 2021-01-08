@@ -107,6 +107,7 @@ export default {
             type: 'success',
           });
         }
+        this.$router.go(0)
       })
       this.addCourseDialog = false
     },

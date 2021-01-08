@@ -42,12 +42,7 @@ export default {
   },
   methods: {
     navToCourse(courseID) {
-      if (this.navTarget) {
-        this.$router.push('/courseInfo/' + courseID)
-      }
-      else {
-        this.$router.push('/course/'+ courseID + '/chapter')
-      }
+      this.$router.push('/courseInfo/' + courseID)
     }
   },
 }
