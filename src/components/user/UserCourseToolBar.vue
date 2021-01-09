@@ -1,13 +1,14 @@
 <template>
   <el-card shadow="never">
     <el-row>
-      <el-button type="primary" v-if="!$store.state.user.userType">加入课程</el-button>
+      <el-button type="primary" v-if="!$store.state.user.userType"
+      :disabled="true">加入课程</el-button>
       <el-button type="primary" v-else @click="addCourseDialog = true">添加课程</el-button>
-      <div style="float: right">
-        <el-input class="search-input" v-model="input"
-                  placeholder="搜索我的课程" @keyup.enter.native="search"/>
-        <el-button type="primary" icon="el-icon-search" @click="search">搜索</el-button>
-      </div>
+<!--      <div style="float: right">-->
+<!--        <el-input class="search-input" v-model="input"-->
+<!--                  placeholder="搜索我的课程" @keyup.enter.native="search"/>-->
+<!--        <el-button type="primary" icon="el-icon-search" @click="search">搜索</el-button>-->
+<!--      </div>-->
 
       <el-dialog title="添加课程" :visible.sync="addCourseDialog">
         <el-form :model="addCourseForm">

@@ -38,7 +38,7 @@ export default {
 <style lang="scss" scoped>
 .user-card {
   height: 500px;
-  width: 200px;
+  width: 202px;
   .avatar-box {
     border-bottom: 1px solid #ddd;
     margin-top: 20px;

@@ -1,23 +1,29 @@
 <template>
-  <div style="width: 876px;">
+  <div style="width: 772px;">
     <div class="tool-bar">
       <UserCourseToolBar></UserCourseToolBar>
     </div>
 
-    <div style="margin-top: 10px; margin-bottom: 10px">
-      <el-pagination
-        background small style="float: right;"
-        layout="prev, slot, next, jumper" :page-count="totalPage"
-        :current-page.sync="currentPage">
-        <span class="page-span">{{ currentPage }}/{{ totalPage }}</span>
-      </el-pagination>
+    <div v-if="courseListInPage.length">
+      <div style="margin-top: 10px; margin-bottom: 10px">
+        <el-pagination
+          background small style="float: right;"
+          layout="prev, slot, next, jumper" :page-count="totalPage"
+          :current-page.sync="currentPage">
+          <span class="page-span">{{ currentPage }}/{{ totalPage }}</span>
+        </el-pagination>
+      </div>
+
+      <div class="course-list-wrapper">
+        <CourseLongCards :courses="courseListInPage"></CourseLongCards>
+      </div>
     </div>
 
-    <div class="course-list-wrapper">
-      <CourseLongCards :courses="courseListInPage"></CourseLongCards>
+    <div v-else style="margin-top: 20px; margin-left: 20px">
+      尚未加入课程
     </div>
+
   </div>
-
 </template>
 
 <script>

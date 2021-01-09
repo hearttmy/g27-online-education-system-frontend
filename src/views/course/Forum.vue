@@ -108,12 +108,13 @@ export default {
         courseID: this.$store.state.course.courseID
       })
       .then(res => {
+        console.log(res)
         if (res.state) {
           this.allPostData = res.Posts.map(value => {
-            if (value.teacher) {
+            if (value.teacher.length) {
               value['owner'] = value.teacher[0]
             }
-            else if (value.student) {
+            else if (value.student.length) {
               value['owner'] = value.student[0]
             }
             value['avatar'] = value.owner.avatar
@@ -132,10 +133,10 @@ export default {
       .then(res => {
         if (res.state) {
           this.myPostData = res.Posts.map(value => {
-            if (value.teacher) {
+            if (value.teacher.length) {
               value['owner'] = value.teacher[0]
             }
-            else if (value.student) {
+            else if (value.student.length) {
               value['owner'] = value.student[0]
             }
             value['avatar'] = value.owner.avatar

@@ -55,7 +55,7 @@
 
     <el-form-item>
       <el-button type="primary" @click="submitForm('registerData')"
-                 :loading="submitting">注册并登录</el-button>
+                 :loading="submitting">注册</el-button>
     </el-form-item>
   </el-form>
   </div>
@@ -164,6 +164,12 @@ export default {
                   type: 'success',
                 });
                 this.$router.push('/auth/login')
+              } else {
+                this.$message({
+                  showClose: true,
+                  message: '用户名已被使用',
+                  type: 'warning',
+                });
               }
             })
             .catch(err => {
