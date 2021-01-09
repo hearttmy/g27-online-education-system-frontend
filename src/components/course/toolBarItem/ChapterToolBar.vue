@@ -1,7 +1,7 @@
 <template>
   <el-row>
     <el-button type="primary" @click="addChapterDialog = true">添加章节</el-button>
-    <el-button type="primary" @click="addFileDialog = true">新增学习活动</el-button>
+    <el-button type="primary" @click="addFileDialog = true">新增课件</el-button>
     <DeleteBtn></DeleteBtn>
 
     <el-dialog title="添加章节" :visible.sync="addChapterDialog">

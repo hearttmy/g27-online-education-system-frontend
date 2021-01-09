@@ -5,7 +5,7 @@
     </div>
 
     <div v-if="courseListInPage.length">
-      <div style="margin-top: 10px; margin-bottom: 10px">
+      <div style="margin-top: 10px; margin-bottom: 5px; overflow: hidden">
         <el-pagination
           background small style="float: right;"
           layout="prev, slot, next, jumper" :page-count="totalPage"
@@ -58,7 +58,6 @@ export default {
     UserProvider.getMyCourse({},{
       headers: {'Authorization': this.$store.state.token},
     }).then(res => {
-      console.log(res)
       this.courses = res.info.map(value => {
         value['teacherName'] = value.teacher[0].realName
         return value
@@ -73,7 +72,6 @@ export default {
   margin-left: 20px;
 }
 .course-list-wrapper {
-  margin-top: 20px;
   margin-left: 20px;
 }
 

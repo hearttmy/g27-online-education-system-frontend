@@ -21,6 +21,11 @@ const UserProvider = {
       .then(res => res.data)
       .catch(err => err)
   },
+  getActivity(config) {
+    return http.post('/course/userIndex', null,config)
+      .then(res => res.data)
+      .catch(err => err)
+  },
 }
 
 export default UserProvider

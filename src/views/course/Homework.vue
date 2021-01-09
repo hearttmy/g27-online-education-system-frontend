@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-table v-if="tableData.length" :data="tableData" style="width: 100%">
-      <el-table-column  label="作业名称" :width="250">
+      <el-table-column  label="作业名称" width="300" fixed>
         <template slot-scope="scope">
           <div style="font-weight: bold; font-size: 18px">{{tableData[scope.$index].hwName}}</div>
           <div>起始时间：{{tableData[scope.$index].beginDate}}</div>
