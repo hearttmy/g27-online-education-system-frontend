@@ -56,7 +56,6 @@ export default {
     return {
       courses: [],
       courseIndex: ['全部课程', '理学', '工学', '哲学', '经济学'],
-      tmpUrl: '~@/assets/img/logo.png',
     };
   },
   created() {

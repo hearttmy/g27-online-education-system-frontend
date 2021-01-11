@@ -36,6 +36,11 @@ const CourseProvider  = {
       .then(res => res.data)
       .catch(err => err)
   },
+  delHWFile(payload) {
+    return http.post('/course/delHWFile', payload)
+      .then(res => res.data)
+      .catch(err => err)
+  },
   isTeacher: (config) => {
     return http.get('/course/isTeacher', config)
       .then(res => res.data)

@@ -3,7 +3,7 @@
     <el-col :span="span" v-for="(course, index) in courses" style="padding-bottom: 12px" :key="index">
       <el-card :body-style="'overflow: hidden; padding: 10px;'" shadow="hover"
                @click.native="navToCourse(course.courseID)">
-        <img class="course-cover" src="~@/assets/img/logo.png">
+        <img class="course-cover" :src="$serverImgUrl + course.img">
 
         <div class="course-title">
           <p style="font-weight: bold;">{{course.courseName}}</p>

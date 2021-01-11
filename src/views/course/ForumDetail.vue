@@ -64,9 +64,9 @@ export default {
       .then(res => {
         if (res.state) {
           let tmp = res.Post.map(value => {
-            if (value.teacher) {
+            if (value.teacher.length) {
               value['owner'] = value.teacher[0]
-            } else if (value.student) {
+            } else if (value.student.length) {
               value['owner'] = value.student[0]
             }
             value['avatar'] = value.owner.avatar
@@ -76,9 +76,9 @@ export default {
           this.postData = tmp[0]
 
           this.replyData = res.replies.map(value => {
-            if (value.teacher) {
+            if (value.teacher.length) {
               value['owner'] = value.teacher[0]
-            } else if (value.student) {
+            } else if (value.student.length) {
               value['owner'] = value.student[0]
             }
             value['avatar'] = value.owner.avatar

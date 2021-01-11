@@ -2,8 +2,8 @@
 <el-header class="header-wrapper" height="80px">
 
   <div class="logo-wrapper">
-    <router-link to="/">
-      <img src="~@/assets/img/logo.png" alt="logo" />
+    <router-link to="/" style="outline:none">
+      <img src="~@/assets/img/logo.png" alt="logo" style="width: 200px"/>
     </router-link>
   </div>
 

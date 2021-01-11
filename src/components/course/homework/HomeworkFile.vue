@@ -20,19 +20,39 @@ export default {
     deleteDisabled: {
       type: Boolean,
       default: true,
-    }
+    },
+    delOperation: {
+      type: Number,
+      default: 0,
+    },
+    hwID: {
+      type: String,
+      default: '',
+    },
   },
   methods: {
     deleteFile() {
       const tmp = {}
       tmp['fileName'] = this.file.fileName
       tmp['fileUrl'] = this.file.fileUrl
-      CourseProvider.deleteSubmitFile(tmp, {
-        headers: {'Authorization': this.$store.state.token}
-      }).then(res => {
-        console.log(res)
-        this.$router.go(0)
-      })
+      if (this.delOperation === 0) {
+        CourseProvider.deleteSubmitFile(tmp, {
+          headers: {'Authorization': this.$store.state.token}
+        }).then(res => {
+          if (res.state) {
+            this.$router.go(0)
+          }
+        })
+      } else if (this.delOperation === 1) {
+        tmp['hwID'] = this.hwID
+        CourseProvider.delHWFile(tmp)
+        .then(res => {
+          if (res.state) {
+            this.$router.go(0)
+          }
+        })
+      }
+
     },
     download() {
       axios.get(this.$serverBaseUrl + this.file.fileUrl, {

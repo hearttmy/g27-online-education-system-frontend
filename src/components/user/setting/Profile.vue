@@ -99,13 +99,13 @@ export default {
           UserProvider.changeInfo(this.userData,
             {headers: {'Authorization': this.$store.state.token} })
           .then(res => {
-            console.log(res)
             if (res.state) {
               this.$message({
                 showClose: true,
                 message: '个人信息修改成功',
                 type: 'success',
               });
+              res.user['userType'] = parseInt(res.user.type)
               this.$store.commit('updateUser', res.user)
               this.$router.go(0);
             }

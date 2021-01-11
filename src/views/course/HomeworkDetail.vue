@@ -72,7 +72,8 @@
           </el-dialog>
 
           <div v-for="(item, i) in homework.File" :key="i">
-            <HomeworkFile :file="item" :delete-disabled="!$store.state.isCourseTch"></HomeworkFile>
+            <HomeworkFile :file="item" :delete-disabled="!$store.state.isCourseTch"
+                          :hwID="homework._id" :del-operation="1"></HomeworkFile>
           </div>
         </div>
 
