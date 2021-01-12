@@ -9,7 +9,7 @@
                        @click="deleteBulletin(item._id)"
                        v-if="$store.state.deleteMode">删除公告</el-button>
           </p>
-          <p style="color:#737373;font-size: 13px;">{{getTime(item.time)}}</p>
+          <p style="color:#737373;font-size: 13px;">{{getTime(item.created)}}</p>
         </div>
         <div class="bulletin-body">
           <p>{{ item.content }}</p>
