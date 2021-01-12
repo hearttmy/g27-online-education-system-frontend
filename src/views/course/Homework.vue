@@ -25,13 +25,13 @@
       </el-table-column>
 
       <el-table-column label="提交状态" v-else>
-        <template slot-scope="scope">
+        <template slot-scope="scope" v-if="submitState[scope.$index]">
           {{submitState[scope.$index][0] === 1 ? '已提交' : '未提交'}}
         </template>
       </el-table-column>
 
       <el-table-column label="成绩" v-if="!$store.state.isCourseTch">
-        <template slot-scope="scope">
+        <template slot-scope="scope" v-if="submitState[scope.$index]">
           {{submitState[scope.$index][1] === -1 ? '暂无成绩' : submitState[scope.$index][1]}}
         </template>
       </el-table-column>
@@ -44,7 +44,11 @@
       </el-table-column>
     </el-table>
 
-    <div v-else style="margin-top: 20px">暂无作业</div>
+    <el-card v-else style="margin-top: 10px">
+      <div>
+        暂无作业
+      </div>
+    </el-card>
   </div>
 </template>
 

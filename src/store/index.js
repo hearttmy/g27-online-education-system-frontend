@@ -29,6 +29,11 @@ const store = new Vuex.Store({
       sessionStorage.clear()
       state.isLogin = false
       state.user = {}
+      state.course = {}
+      state.deleteMode = false
+      state.isCourseTA = false
+      state.isCourseTch = false
+      state.isCourseGet = false
       state.token = ''
       state.avatarUrl = "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
     },

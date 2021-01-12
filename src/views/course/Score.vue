@@ -21,31 +21,31 @@
 
       <el-table-column label="操作" v-if="$store.state.isCourseTch">
         <template slot-scope="scope">
-          <el-button type="text" size="small" @click="scoreDialog = true" :disabled="$store.state.isCourseTA">
+          <el-button type="text" size="small" @click="openScoreDialog(scope.$index)" :disabled="$store.state.isCourseTA">
             导入考试成绩
           </el-button>
 
-          <el-dialog title="导入考试成绩" :visible.sync="scoreDialog">
-            <el-form :model="scoreForm"
-                     ref="scoreForm" label-width="80px">
-              <el-form-item label="成绩">
-                <el-input v-model.number="scoreForm.grade" style="width: 200px"></el-input>
-              </el-form-item>
 
-            </el-form>
-
-            <div slot="footer">
-              <el-button @click="scoreDialog = false">取 消</el-button>
-              <el-button type="primary" @click="setScore('scoreForm', scope.$index)">确 定</el-button>
-            </div>
-
-          </el-dialog>
 
         </template>
       </el-table-column>
-
-
     </el-table>
+
+    <el-dialog title="导入考试成绩" :visible.sync="scoreDialog">
+      <el-form :model="scoreForm"
+               ref="scoreForm" label-width="80px">
+        <el-form-item label="成绩">
+          <el-input v-model.number="scoreForm.grade" style="width: 200px"></el-input>
+        </el-form-item>
+
+      </el-form>
+
+      <div slot="footer">
+        <el-button @click="scoreDialog = false">取 消</el-button>
+        <el-button type="primary" @click="setScore('scoreForm')">确 定</el-button>
+      </div>
+    </el-dialog>
+
   </el-card>
 </template>
 
@@ -58,7 +58,8 @@ export default {
     return {
       tableData: [],
       scoreForm: {
-        grade: 0
+        grade: 0,
+        gradeID: '',
       },
       scoreDialog: false,
     }
@@ -91,6 +92,7 @@ export default {
         headers: {'Authorization': this.$store.state.token}
       })
       .then(res => {
+        console.log(res)
         this.tableData = res.Grade.map(value => {
           value['stuID'] = value.stu[0].id
           value['realName'] = value.stu[0].realName
@@ -98,19 +100,21 @@ export default {
         })
       })
     },
-
+    openScoreDialog(index) {
+      this.scoreForm.gradeID = this.tableData[index]._id
+      this.scoreDialog = true
+    },
     setScore(formName, index) {
-      CourseProvider.setExamGrade({
-        grade: this.scoreForm.grade,
-        gradeID: this.tableData[index]._id
-      }).then(res => {
+      CourseProvider.setExamGrade(this.scoreForm).then(res => {
         if (res.state) {
           this.$message({
             showClose: true,
             message: '导入成绩成功',
             type: 'success',
           })
+          this.scoreForm.grade = 0
           this.scoreDialog = false
+          this.getAllGrade()
         }
       })
     },

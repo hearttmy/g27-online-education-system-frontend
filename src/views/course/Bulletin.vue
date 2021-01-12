@@ -1,20 +1,27 @@
 <template>
-  <el-card :body-style="'padding: 0px;'" shadow="never">
-    <div class="bulletin-wrapper" v-for="(item, i) in bulletinData" :key="i">
-      <div class="bulletin-title">
-        <p>
-          {{ item.title }}
-          <el-button style="margin-left: 10px" size="mini" type="danger"
-                     @click="deleteBulletin(item._id)"
-                     v-if="$store.state.deleteMode">删除公告</el-button>
-        </p>
-        <p style="color:#737373;font-size: 13px;">{{getTime(item.time)}}</p>
+  <div>
+    <el-card :body-style="'padding: 0px;'" shadow="never" v-if="bulletinData.length" >
+      <div class="bulletin-wrapper" v-for="(item, i) in bulletinData" :key="i">
+        <div class="bulletin-title">
+          <p>
+            {{ item.title }}
+            <el-button style="margin-left: 10px" size="mini" type="danger"
+                       @click="deleteBulletin(item._id)"
+                       v-if="$store.state.deleteMode">删除公告</el-button>
+          </p>
+          <p style="color:#737373;font-size: 13px;">{{getTime(item.time)}}</p>
+        </div>
+        <div class="bulletin-body">
+          <p>{{ item.content }}</p>
+        </div>
       </div>
-      <div class="bulletin-body">
-        <p>{{ item.content }}</p>
-      </div>
-    </div>
-  </el-card>
+    </el-card>
+
+    <el-card v-else >
+      暂无公告
+    </el-card>
+  </div>
+
 </template>
 
 <script>

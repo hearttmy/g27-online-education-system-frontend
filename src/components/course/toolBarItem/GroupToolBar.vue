@@ -73,7 +73,7 @@ export default {
       CourseProvider.makeGroup({
         courseID: this.$store.state.course.courseID,
         groupName: this.groupName,
-        groupMember: this.studentList,
+        groupMember: this.studentSelection,
       }).then(res => {
         if (res.state) {
           this.$message({

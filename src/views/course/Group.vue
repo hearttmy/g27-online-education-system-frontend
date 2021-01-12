@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-card :body-style="'padding: 10px'">
-      <el-collapse v-model="activeNames">
+      <el-collapse v-model="activeNames" v-if="groupData.length">
         <el-collapse-item v-for="(item, i) in groupData" :key="i" :name="i">
           <template slot="title">
             <span style="font-size: 18px;font-weight: bold">{{item.groupName}}</span>
@@ -26,6 +26,10 @@
 
         </el-collapse-item>
       </el-collapse>
+
+      <div v-else>
+        暂无分组
+      </div>
     </el-card>
   </div>
 </template>

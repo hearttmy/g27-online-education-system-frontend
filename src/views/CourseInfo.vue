@@ -12,8 +12,8 @@
           开课时间：{{course.DurationTime}}
         </div>
         <div style="margin-top: 35px">
-          <p style="font-weight: bold">授课老师：
-            {{course.teacherID}}
+          <p style="font-weight: bold" v-if="course.teacher">授课老师：
+            {{course.teacher[0].realName}}
           </p>
         </div>
         <div style="margin-top: 70px">
