@@ -109,7 +109,7 @@ export default {
               else {
                 this.$message({
                   showClose: true,
-                  message: '用户名或密码错误',
+                  message: '学号或密码错误',
                   type: 'warning'
                 });
               }
