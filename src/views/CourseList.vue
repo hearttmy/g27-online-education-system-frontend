@@ -67,11 +67,11 @@ export default {
       }
     },
     courseListInPage() {
-      if (this.currentPage * 6 <= this.courses.length) {
+      if (this.currentPage * 6 <= this.courseList.length) {
         return this.courseList.slice((this.currentPage - 1) * 6, this.currentPage * 6)
       }
       else {
-        return this.courseList.slice((this.currentPage - 1) * 6, this.courses.length)
+        return this.courseList.slice((this.currentPage - 1) * 6, this.courseList.length)
       }
     },
     totalPage() {
