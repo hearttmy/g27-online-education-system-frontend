@@ -96,7 +96,7 @@ export default {
 }
 
 .logo-wrapper {
-  margin-left: 200px;
+  margin-left: 150px;
 }
 
 .search-wrapper {

@@ -27,7 +27,6 @@ export default {
   },
   methods: {
     navToCourse(courseID) {
-      // this.$router.push('/course/'+ courseID + '/chapter')
       this.$router.push('/courseInfo/' + courseID)
     }
   }
